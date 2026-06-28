@@ -38,7 +38,20 @@ Source audio is fetched via the `youtube-video-downloader` skill, which reads a 
 The processed knowledge base lives in an Obsidian vault named **Ark**, located at `Ark/` in the repo root. This is the destination for the finished, repurposed output — the clean, searchable library the whole pipeline feeds.
 * **Role in the Pipeline**: `download-video/` holds raw source artifacts (`.mp3`, `.info.json`, `.srt`, `.meta.json`). **Ark** holds the *curated* output: video summaries (Section 1), blog drafts (Section 2), and podcast scripts (Section 3). Keep raw acquisition out of Ark.
 * **It Is a Real Obsidian Vault**: `Ark/.obsidian/` contains the app's config (tracked in git). Treat notes as Obsidian Markdown — use `[[wiki-links]]` to connect related videos, ideas, and people so the graph stays navigable.
-* **Note Format**: One Markdown note per video. Lead with YAML frontmatter mapping the `<Title>.meta.json` fields (`published date`, `title`, `channel`, `watch date`, `category`, `origin`), then the structured summary body.
+* **Note Format**: One Markdown note per video. Lead with YAML frontmatter mapping the `<Title>.meta.json` fields, then a `![[<videoId>.jpg]]` thumbnail embed, then the structured summary body. The frontmatter mapping is exact:
+
+  | Frontmatter key | Source (`<Title>.meta.json`) | Notes |
+  | --- | --- | --- |
+  | `title` | `title` | — |
+  | `topic` | `category` | YAML list (one `- <category>` item) |
+  | `channel` | `channel` | — |
+  | `origin link` | `origin` | full YouTube URL |
+  | `publish date` | `published date` | `YYYY-MM-DD` |
+  | `watch date` | `watch date` | `YYYY-MM-DD` |
+
+* **Note Location & Naming**: `Ark/Learning/<MM>/<DD-MM-YYYY>-<N>.md`, all derived from the **watch date**. `<MM>` is the 2-digit month folder; the filename is the watch date as `DD-MM-YYYY` plus `-<N>`, where `N` is the next free sequence number for that date (three videos watched 19-06-2026 → `19-06-2026-1.md`, `-2.md`, `-3.md`).
+* **Thumbnails**: Copy each video's `<Title>.jpg` into `Ark/Misc/Thnmbnails/<videoId>.jpg` and embed it as `![[<videoId>.jpg]]`. `<videoId>` is the `v=` value of the `origin` URL (also `id` in `.info.json`). The folder spelling **"Thnmbnails"** is intentional (legacy) — keep using it; do not create a second `Thumbnails/` folder. Obsidian resolves `![[file.jpg]]` by filename, so the embed works regardless of folder.
+* **The `build-ark-note` Skill**: The final pipeline stage is automated by the `build-ark-note` skill (`.claude/skills/build-ark-note/`). It runs after `transcribe-audio` and `extract-video-meta`: for each `download-video/<Title>/` folder it copies the thumbnail, computes the note path/frontmatter (`scripts/prepare-note.sh` handles the mechanical parts), authors the summary body from the `.srt`, writes the note, then **deletes the source folder** so `download-video/` only ever holds unprocessed work. Trigger it with phrases like "build the Ark notes" or "add this video to Ark".
 * **Leave the Stock Note Alone Unless Asked**: The vault currently holds only Obsidian's default `Welcome.md`. Do not delete or overwrite it unless I ask.
 
 ## 🛑 6. Guardrails & Quality Control
