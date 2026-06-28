@@ -1,6 +1,6 @@
-you need to learn a new skill, all content,
+you need to learn a new skill, process video
 
-1. study existing files from /Ark/Learning/05 and /Ark/Learning/06, including its structure, file naming convention.
-2. for each subfolder in /download-video, by using files created in the subfolder, use the .jpg file, the .srt file and the .meta.json file, create a similar file with the similar file structure and file naming convention. 
-3. be sure to copy video thumbnails to /Ark/Misc/Thumbnails, make sure the link works.
-4. after complete a video, delete the folder from /download-video.
+1. combine existing skills, /youtube-video-downloader, /extract-video-meta, /transcribe-audio, build-ark-note
+2. download all videos from the nominated playlist, for each video, create relevant Ark notes.
+3. be sure to remove subfolder after complete processing on that video.
+4. when all done, there should be nothing left in the download-video folder.
