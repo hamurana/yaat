@@ -4,21 +4,20 @@
     "type": "split",
     "children": [
       {
-        "id": "c0717efbe1329ff0",
+        "id": "44d03cd014eea754",
         "type": "tabs",
         "children": [
           {
-            "id": "a4c32a6dc9b93ba6",
+            "id": "2e3442c886d1e8b6",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "bases",
               "state": {
-                "file": "Learning/06/28-06-2026-2.md",
-                "mode": "preview",
-                "source": false
+                "file": "Untitled.base",
+                "viewName": "Table"
               },
-              "icon": "lucide-file",
-              "title": "28-06-2026-2"
+              "icon": "lucide-table",
+              "title": "Untitled"
             }
           }
         ]
@@ -94,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Welcome.md",
+                "file": "Untitled.base",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +103,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for Welcome"
+              "title": "Backlinks for Untitled"
             }
           },
           {
@@ -142,7 +141,7 @@
             "state": {
               "type": "all-properties",
               "state": {
-                "sortOrder": "frequency",
+                "sortOrder": "alphabetical",
                 "showSearch": false,
                 "searchQuery": ""
               },
@@ -156,21 +155,21 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Welcome.md",
+                "file": "Untitled.base",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of Welcome"
+              "title": "Outline of Untitled"
             }
           }
-        ]
+        ],
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -183,44 +182,45 @@
       "bases:Create new base": false
     }
   },
-  "active": "a4c32a6dc9b93ba6",
+  "active": "2e3442c886d1e8b6",
   "lastOpenFiles": [
-    "Learning/06/29-06-2026-15.md",
-    "Misc/Thnmbnails/UH1NO4iiaoE.jpg",
-    "Learning/06/29-06-2026-14.md",
-    "Misc/Thnmbnails/BARmrmn-NfQ.jpg",
-    "Learning/06/29-06-2026-13.md",
-    "Misc/Thnmbnails/HzRcJsuzyBU.jpg",
-    "Learning/06/29-06-2026-12.md",
-    "Misc/Thnmbnails/ONLwWXNR3j4.jpg",
-    "Learning/06/29-06-2026-11.md",
-    "Misc/Thnmbnails/saLGnGU1suE.jpg",
-    "Learning/06/29-06-2026-10.md",
-    "Misc/Thnmbnails/YPnKKuWzR0Y.jpg",
-    "Learning/06/29-06-2026-9.md",
-    "Misc/Thnmbnails/T1-MJLh8UvA.jpg",
-    "Learning/06/29-06-2026-8.md",
-    "Misc/Thnmbnails/d2iWIdrBXNM.jpg",
-    "Learning/06/29-06-2026-7.md",
-    "Misc/Thnmbnails/sKJ7TJJKkqY.jpg",
-    "Learning/06/29-06-2026-6.md",
-    "Misc/Thnmbnails/YMdhhnJ7w_o.jpg",
-    "Learning/06/29-06-2026-5.md",
-    "Learning/06/29-06-2026-4.md",
-    "Learning/06/29-06-2026-3.md",
-    "Learning/06/29-06-2026-2.md",
+    "Learning/05/17-05-2026-1.md",
+    "Untitled.base",
+    "Learning/05/15-05-2026-6.md",
     "Learning/06/29-06-2026-1.md",
-    "Learning/06/28-06-2026-1.md",
+    "Learning/06/29-06-2026-4.md",
     "Learning/06/28-06-2026-2.md",
-    "Learning/05/11-05-2026-1.md",
-    "Learning/05/12-05-2026-2.md",
-    "Welcome.md",
+    "Learning/06/29-06-2026-15.md",
+    "Learning/06/29-06-2026-14.md",
+    "Learning/06/29-06-2026-13.md",
+    "Learning/06/29-06-2026-12.md",
+    "Learning/06/29-06-2026-11.md",
+    "Learning/06/29-06-2026-10.md",
+    "Learning/06/29-06-2026-9.md",
+    "Learning/06/29-06-2026-8.md",
+    "Learning/06/29-06-2026-7.md",
+    "Learning/06/29-06-2026-6.md",
+    "Learning/06/29-06-2026-5.md",
+    "Learning/06/29-06-2026-3.md",
+    "Learning/06/24-06-2026-13.md",
+    "Learning/06/24-06-2026-12.md",
+    "Learning/06/29-06-2026-2.md",
+    "Learning/06/28-06-2026-1.md",
     "Learning/06/25-06-2026-12.md",
     "Learning/06/25-06-2026-11.md",
     "Learning/06/25-06-2026-10.md",
     "Learning/06/25-06-2026-9.md",
     "Learning/06/25-06-2026-8.md",
-    "Learning/06/25-06-2026-7.md",
+    "Misc/Thnmbnails/UH1NO4iiaoE.jpg",
+    "Misc/Thnmbnails/BARmrmn-NfQ.jpg",
+    "Misc/Thnmbnails/HzRcJsuzyBU.jpg",
+    "Misc/Thnmbnails/ONLwWXNR3j4.jpg",
+    "Misc/Thnmbnails/saLGnGU1suE.jpg",
+    "Misc/Thnmbnails/YPnKKuWzR0Y.jpg",
+    "Misc/Thnmbnails/T1-MJLh8UvA.jpg",
+    "Misc/Thnmbnails/d2iWIdrBXNM.jpg",
+    "Misc/Thnmbnails/sKJ7TJJKkqY.jpg",
+    "Misc/Thnmbnails/YMdhhnJ7w_o.jpg",
     "Misc/Thnmbnails",
     "Misc",
     "Learning/06",
