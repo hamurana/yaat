@@ -35,21 +35,68 @@ spaces and all):
   "title": "4 Tips To IMPROVE Your Public Speaking - How to CAPTIVATE an Audience",
   "channel": "Motivation2Study",
   "watch date": "2026-06-28",
-  "category": "Education",
+  "category": "Charisma",
   "origin": "https://www.youtube.com/watch?v=962eYqe--Yc"
 }
 ```
 
-Field sources (all but "watch date" come from the `.info.json`):
+Field sources (everything except `category` is a mechanical projection from the
+`.info.json`; `category` is **inferred** — see the next section):
 
-| Field            | Source in `.info.json`                          |
-|------------------|-------------------------------------------------|
-| `published date` | `.upload_date` (`YYYYMMDD` reformatted to `YYYY-MM-DD`) |
-| `title`          | `.title`                                        |
-| `channel`        | `.channel`                                       |
-| `watch date`     | today's system date, when the script runs       |
-| `category`       | `.categories[0]` (first category, or `null`)    |
-| `origin`         | `.webpage_url` (the source video URL)           |
+| Field            | Source                                                  |
+|------------------|---------------------------------------------------------|
+| `published date` | `.upload_date` (`YYYYMMDD` reformatted to `YYYY-MM-DD`)  |
+| `title`          | `.title`                                                 |
+| `channel`        | `.channel`                                               |
+| `watch date`     | today's system date, when the script runs               |
+| `category`       | **Inferred from existing Ark/Learning notes** (not from `.info.json`). The script writes the sentinel `"__INFER__"`; you fill it in the inference pass below. |
+| `origin`         | `.webpage_url` (the source video URL)                    |
+
+## Inferring `category` (the note's `topic`)
+
+`category` becomes the `topic` of the Ark note, and the vault uses a small,
+consistent topic vocabulary. The raw `.categories[0]` from yt-dlp is useless here
+(it only ever yields generic buckets like "Education" or "Howto & Style"), so the
+script deliberately does **not** copy it. Instead it writes the sentinel
+`"__INFER__"`, and you replace that with the right topic.
+
+After running the script, do an inference pass over every `.meta.json` whose
+`category` is still `"__INFER__"`:
+
+1. **Gather the existing topic vocabulary** from the Ark Learning notes:
+
+   ```bash
+   grep -rh -A2 '^topic:' Ark/Learning --include='*.md' \
+     | grep '^[[:space:]]*-' | sed 's/^[[:space:]]*-[[:space:]]*//' \
+     | sort | uniq -c | sort -rn
+   ```
+
+   This lists each topic already in use and how often, e.g. `Investment`,
+   `Habit`, `Charisma`, `Health`, `Procrastination`.
+
+2. **Infer the best fit per video.** Using the video's `title` (and `channel` /
+   `origin` for context), pick the existing topic that best matches its subject.
+   Reuse an existing topic whenever one reasonably fits — fidelity to the
+   established vocabulary keeps the Obsidian graph clean.
+
+3. **Mint a new topic only as a last resort.** If — and only if — no existing
+   topic is a sensible fit, create a new short topic name (Title Case, single
+   word or short phrase, matching the style of the existing ones). Do not force a
+   bad match, but do not invent near-duplicates of an existing topic either
+   (don't add `Investing` when `Investment` exists).
+
+4. **Write the chosen value** into the `category` field, replacing `"__INFER__"`.
+   For example:
+
+   ```bash
+   tmp="$(mktemp)" && jq '.category = "Charisma"' path/to/<Title>.meta.json > "$tmp" \
+     && mv "$tmp" path/to/<Title>.meta.json
+   ```
+
+No `.meta.json` should be left with `category` equal to `"__INFER__"` when the
+skill finishes. If a previous interrupted run left sentinels behind, sweep them
+up too (`grep -rl '"__INFER__"' download-video`), since folders that already have
+a `.meta.json` are skipped by the script on re-runs.
 
 ## How to run it
 
@@ -65,6 +112,11 @@ Pass a different base folder as the first argument if needed
 
 When it finishes, report the summary line it prints: how many folders were
 found, written, skipped, and failed.
+
+The script is only phase 1 — it fills the five mechanical fields and leaves
+`category` as the `"__INFER__"` sentinel. Then run the inference pass described in
+"Inferring `category`" above to set each video's topic before the metadata is
+considered complete.
 
 ## Why the script works the way it does
 
@@ -86,5 +138,7 @@ found, written, skipped, and failed.
 - Requires `jq` on PATH (`brew install jq`).
 - `published date` reformats yt-dlp's compact `YYYYMMDD` to `YYYY-MM-DD`; if the
   field is missing or not 8 digits, the raw value is passed through unchanged.
-- `category` takes the first entry of `.categories`; videos with no category get
-  `null`.
+- `category` is **not** read from the `.info.json`. The script writes the
+  sentinel `"__INFER__"`; the inference pass replaces it with a topic matched
+  against the existing `Ark/Learning` notes, minting a new topic only when none
+  fits.

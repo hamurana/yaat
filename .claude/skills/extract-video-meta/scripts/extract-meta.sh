@@ -12,7 +12,9 @@
 #   "title"          <- .title
 #   "channel"        <- .channel
 #   "watch date"     <- today's system date (when this script runs)
-#   "category"       <- .categories[0]
+#   "category"       <- "__INFER__" sentinel; NOT taken from .info.json.
+#                       The video's topic is inferred separately by matching
+#                       against existing Ark/Learning notes (see SKILL.md).
 #   "origin"         <- .webpage_url
 #
 # Idempotent: a folder whose .meta.json already exists is skipped. This also
@@ -77,7 +79,7 @@ for dir in "$BASE_DIR"/*/; do
         "title":          .title,
         "channel":        .channel,
         "watch date":     $watch,
-        "category":       (.categories[0] // null),
+        "category":       "__INFER__",
         "origin":         .webpage_url
       }' "$info" > "$meta"; then
     done_count=$((done_count + 1))
