@@ -34,7 +34,14 @@ Source audio is fetched via the `youtube-video-downloader` skill, which reads a 
 * **Batch Safety**: For multi-video runs add `--ignore-errors --no-overwrites` so one bad/region-locked video doesn't abort the batch and re-runs skip already-completed files.
 * **Output Layout**: Each video gets its own folder containing exactly three files — `<Title>.mp3`, `<Title>.info.json`, `<Title>.jpg`. Report the count of successful downloads versus expected when done.
 
-## 🛑 5. Guardrails & Quality Control
+## 📚 5. Ark Knowledge Base (Obsidian Vault)
+The processed knowledge base lives in an Obsidian vault named **Ark**, located at `Ark/` in the repo root. This is the destination for the finished, repurposed output — the clean, searchable library the whole pipeline feeds.
+* **Role in the Pipeline**: `download-video/` holds raw source artifacts (`.mp3`, `.info.json`, `.srt`, `.meta.json`). **Ark** holds the *curated* output: video summaries (Section 1), blog drafts (Section 2), and podcast scripts (Section 3). Keep raw acquisition out of Ark.
+* **It Is a Real Obsidian Vault**: `Ark/.obsidian/` contains the app's config (tracked in git). Treat notes as Obsidian Markdown — use `[[wiki-links]]` to connect related videos, ideas, and people so the graph stays navigable.
+* **Note Format**: One Markdown note per video. Lead with YAML frontmatter mapping the `<Title>.meta.json` fields (`published date`, `title`, `channel`, `watch date`, `category`, `origin`), then the structured summary body.
+* **Leave the Stock Note Alone Unless Asked**: The vault currently holds only Obsidian's default `Welcome.md`. Do not delete or overwrite it unless I ask.
+
+## 🛑 6. Guardrails & Quality Control
 * **Zero Hallucination**: If a transcript segment is garbled, messy, or unclear due to auto-generation errors, **do not guess**. State: `[Transcript Unclear at this point]` and ask me for clarification.
 * **No Feedback Loops**: Do not compliment my transcript choices or congratulate me on the scale of my knowledge library. Move straight to processing the content.
 * **Direct Output First**: Start your responses directly with the requested summary, blog draft, or podcast script. Never use conversational filler like *"Sure, here is the blog post based on your video..."*

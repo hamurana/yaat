@@ -13,28 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Welcome.md",
+                "file": "Learning/05/11-05-2026-1.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Welcome"
-            }
-          }
-        ]
-      },
-      {
-        "id": "1a5af473197ba7b2",
-        "type": "tabs",
-        "children": [
-          {
-            "id": "6a4c81217cea26c1",
-            "type": "leaf",
-            "state": {
-              "type": "graph",
-              "state": {},
-              "icon": "lucide-git-fork",
-              "title": "Graph view"
+              "title": "11-05-2026-1"
             }
           }
         ]
@@ -201,6 +185,36 @@
   },
   "active": "a4c32a6dc9b93ba6",
   "lastOpenFiles": [
-    "Welcome.md"
+    "Learning/05/12-05-2026-2.md",
+    "Learning/05/11-05-2026-1.md",
+    "Welcome.md",
+    "Learning/06/25-06-2026-12.md",
+    "Learning/06/25-06-2026-11.md",
+    "Learning/06/25-06-2026-10.md",
+    "Learning/06/25-06-2026-9.md",
+    "Learning/06/25-06-2026-8.md",
+    "Learning/06/25-06-2026-7.md",
+    "Learning/06/25-06-2026-6.md",
+    "Learning/06/25-06-2026-5.md",
+    "Learning/06/25-06-2026-4.md",
+    "Learning/06/25-06-2026-3.md",
+    "Learning/06/25-06-2026-2.md",
+    "Learning/06/25-06-2026-1.md",
+    "Learning/06/24-06-2026-16.md",
+    "Learning/06/24-06-2026-15.md",
+    "Learning/06/24-06-2026-14.md",
+    "Learning/06/24-06-2026-13.md",
+    "Learning/06/24-06-2026-12.md",
+    "Learning/06/24-06-2026-11.md",
+    "Learning/06/24-06-2026-10.md",
+    "Learning/06/24-06-2026-9.md",
+    "Learning/06/24-06-2026-8.md",
+    "Learning/06/24-06-2026-7.md",
+    "Learning/06/24-06-2026-6.md",
+    "Misc/Thnmbnails",
+    "Misc",
+    "Learning/06",
+    "Learning/05",
+    "Learning"
   ]
 }
