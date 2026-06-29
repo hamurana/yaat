@@ -12,8 +12,14 @@
 # Idempotent: a folder whose .srt already exists is skipped, so re-running
 # after an interruption resumes where it left off instead of redoing work.
 #
-# Usage: transcribe.sh [BASE_DIR]
-#   BASE_DIR defaults to "download-video" relative to the current directory.
+# Usage: transcribe.sh [DIR]
+#   DIR defaults to "download-video" relative to the current directory.
+#   DIR may be EITHER a base folder of video subfolders (batch mode) OR a single
+#   video folder (per-video mode). If the folder itself directly contains an
+#   *.mp3, it is treated as one video; otherwise its immediate subfolders are
+#   each treated as a video. This lets the process-video pipeline transcribe one
+#   folder at a time while the original `transcribe.sh download-video` batch call
+#   keeps working unchanged.
 
 set -u
 
@@ -35,8 +41,15 @@ done_count=0
 skipped=0
 failed=0
 
-# Iterate immediate subfolders only. Each is treated as one video.
-for dir in "$BASE_DIR"/*/; do
+# Decide what to iterate: a single video folder (it directly holds an mp3) or a
+# base dir of video subfolders. Either way, each element of "dirs" is one video.
+if find "$BASE_DIR" -maxdepth 1 -type f -name '*.mp3' | grep -q .; then
+  dirs=("$BASE_DIR")
+else
+  dirs=("$BASE_DIR"/*/)
+fi
+
+for dir in "${dirs[@]}"; do
   [[ -d "$dir" ]] || continue
   total=$((total + 1))
   dir="${dir%/}"

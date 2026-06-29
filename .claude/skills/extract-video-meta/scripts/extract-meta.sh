@@ -21,8 +21,14 @@
 # preserves the original "watch date" on re-runs (re-running tomorrow won't
 # overwrite a record written today); only newly added videos get processed.
 #
-# Usage: extract-meta.sh [BASE_DIR]
-#   BASE_DIR defaults to "download-video" relative to the current directory.
+# Usage: extract-meta.sh [DIR]
+#   DIR defaults to "download-video" relative to the current directory.
+#   DIR may be EITHER a base folder of video subfolders (batch mode) OR a single
+#   video folder (per-video mode). If the folder itself directly contains an
+#   *.info.json, it is treated as one video; otherwise its immediate subfolders
+#   are each treated as a video. This lets the process-video pipeline extract one
+#   folder at a time while the original `extract-meta.sh download-video` batch
+#   call keeps working unchanged.
 
 set -u
 
@@ -46,8 +52,15 @@ done_count=0
 skipped=0
 failed=0
 
-# Iterate immediate subfolders only. Each is treated as one video.
-for dir in "$BASE_DIR"/*/; do
+# Decide what to iterate: a single video folder (it directly holds an info.json)
+# or a base dir of video subfolders. Either way, each element is one video.
+if find "$BASE_DIR" -maxdepth 1 -type f -name '*.info.json' | grep -q .; then
+  dirs=("$BASE_DIR")
+else
+  dirs=("$BASE_DIR"/*/)
+fi
+
+for dir in "${dirs[@]}"; do
   [[ -d "$dir" ]] || continue
   total=$((total + 1))
   dir="${dir%/}"

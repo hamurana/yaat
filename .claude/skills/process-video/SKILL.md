@@ -1,105 +1,141 @@
 ---
 name: process-video
-description: Run the full YouTube-to-Ark pipeline end to end — download every video in the nominated playlist, transcribe it, extract its metadata, and build one curated Obsidian note per video in the Ark vault, deleting each source folder as it finishes so download-video/ ends up empty. Use whenever the user wants to "process the videos", "process the playlist", "run the whole/full pipeline", "download and build the Ark notes", or otherwise take a playlist all the way from URL to finished knowledge-base notes in one go. This orchestrates the youtube-video-downloader, transcribe-audio, extract-video-meta, and build-ark-note skills in the correct dependency order.
+description: Run the full YouTube-to-Ark pipeline end to end — download every video in the nominated playlist, then process them one at a time (transcribe, extract metadata, build one curated Obsidian note in the Ark vault, and delete the source folder) until download-video/ ends up empty. Use whenever the user wants to "process the videos", "process the playlist", "run the whole/full pipeline", "download and build the Ark notes", or otherwise take a playlist all the way from URL to finished knowledge-base notes in one go. This orchestrates the youtube-video-downloader, transcribe-audio, extract-video-meta, and build-ark-note skills in the correct dependency order.
 ---
 
 # Process Video (full pipeline)
 
 End-to-end orchestrator. Takes the playlist URLs in `video.json` all the way to
 finished **Ark** notes, then leaves `download-video/` empty. It chains four
-existing skills in strict dependency order — it does **not** reimplement them.
+existing skills — it does **not** reimplement them.
+
+The shape is: **download is batch** (one resilient yt-dlp pass over the whole
+playlist), then the workflow **switches to per-video** — each downloaded video is
+transcribed, has its metadata extracted, gets its Ark note authored, and is then
+**deleted to mark it done**, before the next video starts. Completing one video
+fully before the next means an interrupted run only ever removes finished work, so
+re-running resumes cleanly.
 
 ## Pipeline stages and their dependencies
 
 ```
 video.json
-   │ 1. download (yt-dlp)          produces: <Title>.mp3 .info.json .jpg
+   │ 1. download (yt-dlp)          BATCH, one pass per playlist URL
+   ▼                               produces: download-video/<Title>/{.mp3,.info.json,.jpg}
+download-video/
+   │
+   │  ── then, PER VIDEO (for each <Title>/ folder, one at a time) ──
+   │   2. transcribe (whisper)     needs: .mp3        produces: .srt
+   │   3. extract-meta (jq)        needs: .info.json  produces: .meta.json
+   │   4. build-ark-note           needs: .srt AND .meta.json AND .jpg
+   │                               produces: Ark/Learning/<MM>/<DD-MM-YYYY>-<N>.md + thumbnail
+   │   5. delete download-video/<Title>/   (marks this video done)
    ▼
-download-video/<Title>/
-   │ 2. transcribe (whisper)       needs: .mp3        produces: .srt
-   │ 3. extract-meta (jq)          needs: .info.json  produces: .meta.json
-   ▼
-   │ 4. build-ark-note  needs: .srt AND .meta.json AND .jpg
-   ▼                    produces: Ark/Learning/<MM>/<DD-MM-YYYY>-<N>.md + thumbnail
-Ark/   (then the source folder is DELETED)
+Ark/   (download-video/ ends up empty)
 ```
 
-**Order is not optional.** Stage 4 deletes the source folder, so running it
-before 2 and 3 finish destroys un-summarised work. Stages 2 and 3 both depend
-only on stage 1, so the download must complete first; 2 and 3 are independent of
-each other.
+**Order is not optional.** The batch download must finish first (stages 2–4 need
+its output). Within a video, stage 4 deletes the folder, so it must run only after
+2 and 3 have produced the `.srt` and `.meta.json`.
 
 ## How to run it
 
-### Stages 1–3 — one script (deterministic, no authoring needed)
+### Stage 1 — download the whole playlist (batch)
 
-From the project root:
+From the project root, run the download script in the **background** and `tail` its
+log so progress is visible — a playlist download is long-running, so do **not**
+block silently:
 
 ```bash
-bash .claude/skills/process-video/scripts/fetch-and-prep.sh
+bash .claude/skills/process-video/scripts/download.sh
+# watch in another terminal (or periodically tail it yourself):
+tail -f download-video/process-video.log
 ```
 
-It runs download → transcribe → extract-meta top-to-bottom (so the dependency
-barriers hold), reusing `transcribe-audio` and `extract-video-meta`'s own
-scripts. Optional args: `fetch-and-prep.sh [video.json] [download-video]`.
+`download.sh` does one resilient yt-dlp pass per playlist URL in `video.json`
+(per CLAUDE.md §4 — **not** the "enumerate then download each" flow), with
+`--ignore-errors --no-overwrites` so one bad video doesn't abort the batch and a
+re-run skips already-downloaded files. Optional args: `download.sh [video.json]
+[download-video]`. It mirrors all output to `download-video/process-video.log`
+(truncated each run) with `PYTHONUNBUFFERED=1` so yt-dlp progress streams live.
 
-Every stage is idempotent — yt-dlp uses `--no-overwrites`, transcribe/extract
-skip folders already done — so a re-run after an interruption resumes cleanly.
-The script uses `set -u` (not `-e`) so one region-locked video under
-`--ignore-errors` won't abort the batch.
+When it finishes, report how many video folders landed in `download-video/`.
 
-When it finishes, report the per-stage summary lines it printed (downloaded /
-transcribed / extracted counts).
+### Stages 2–5 — process each video, one at a time
 
-#### Watching progress live
+After the download finishes, list the folders and count them:
 
-The script mirrors **all** of its output (its own stage banners plus every
-yt-dlp/whisper line) to both the terminal and a log file at
-`download-video/process-video.log`, and runs Python unbuffered so progress
-streams as it happens rather than in delayed chunks. The log is truncated at the
-start of each run.
+```bash
+find download-video -mindepth 1 -maxdepth 1 -type d | sort
+```
 
-- **To watch in real time**, open a second Terminal and run:
-  ```bash
-  tail -f download-video/process-video.log
-  ```
-- **When the orchestrator (Claude) runs it**, start `fetch-and-prep.sh` in the
-  **background** and periodically `tail` `download-video/process-video.log` to
-  surface progress to the user — do **not** block silently until the whole pass
-  finishes. (Backgrounding alone hides output in a temp file the user can't see;
-  the log file is what makes the run watchable.)
+Let **N** be that count. Print the progress checklist (below) once, then loop over
+the folders **one at a time**. For each `download-video/<Title>/`:
 
-### Stage 4 — build one Ark note per video (you author each body)
+1. **Transcribe just this video** (whisper). The script auto-detects a single
+   video folder, so pass the folder itself:
+   ```bash
+   bash .claude/skills/transcribe-audio/scripts/transcribe.sh "download-video/<Title>"
+   ```
+   whisper can take minutes — run this **backgrounded** and continue once it
+   completes, to avoid the foreground command timeout.
 
-Run **only after `fetch-and-prep.sh` has finished**. Process each
-`download-video/<Title>/` folder **one at a time**, in this exact order:
+2. **Extract metadata for just this video** (jq):
+   ```bash
+   bash .claude/skills/extract-video-meta/scripts/extract-meta.sh "download-video/<Title>"
+   ```
 
-0. **Precondition guard — required before any delete.** Confirm the folder holds
-   all three inputs: `<Title>.srt`, `<Title>.meta.json`, and `<Title>.jpg`. If
-   **any** is missing, an upstream stage failed for this video — **skip the
-   folder, do NOT delete it**, and record it as a leftover needing a retry. Only
-   proceed when all three exist.
+3. **Precondition guard — required before any delete.** Confirm the folder now
+   holds all three inputs: `<Title>.srt`, `<Title>.meta.json`, and `<Title>.jpg`.
+   If **any** is missing (e.g. a video that failed to download has no `.mp3`, so
+   transcribe produced no `.srt`), an upstream step failed for this video — **skip
+   it, do NOT delete the folder**, mark it `❌` in the checklist as a leftover
+   needing a retry, and move to the next video.
 
-1. **Prepare** the mechanical parts:
+4. **Prepare the mechanical note parts:**
    ```bash
    bash .claude/skills/build-ark-note/scripts/prepare-note.sh "download-video/<Title>"
    ```
    Read back `NOTE_PATH=...` and the block between the `FRONTMATTER` markers.
 
-2. **Write the note** at `NOTE_PATH`: the frontmatter block verbatim, then the
-   authored summary body below the `---` divider.
+5. **Write the note** at `NOTE_PATH`: the frontmatter block verbatim, then the
+   authored summary body below the `---` divider. **Author the body** from the
+   `.srt` following **CLAUDE.md §1** (Hook & Core Thesis → Key Arguments by
+   importance → High-Yield Assets kept specific → Case Studies → "So What?"),
+   matching the prose of existing notes in `Ark/Learning/05` and `06`, with
+   `[[wiki-links]]` on key concepts and named people. The `meta.json` `topic`
+   is the `__INFER__` sentinel — infer it from the categories already used in
+   `Ark/Learning` (e.g. Health, Investment, Habit, Charisma). **Zero
+   hallucination** — write `[Transcript Unclear at this point]` rather than guess.
 
-3. **Author the body** from the `.srt` following **CLAUDE.md §1** (Hook & Core
-   Thesis → Key Arguments by importance → High-Yield Assets kept specific →
-   Case Studies → "So What?"), matching the prose of existing notes in
-   `Ark/Learning/05` and `06`, with `[[wiki-links]]` on key concepts and named
-   people. **Zero hallucination** — write `[Transcript Unclear at this point]`
-   rather than guess.
-
-4. **Delete the source folder — only after the note is written:**
+6. **Mark this video done — only after the note is written:**
    ```bash
    rm -rf "download-video/<Title>"
    ```
+   Update the checklist (`✅` + note filename) and reprint it.
+
+### Visual progress indicator
+
+Maintain and **reprint a checklist after every video** so overall progress is
+always visible. One line per video with a status icon, plus a `k/N done` counter:
+
+- `✅` done (show the note filename it produced)
+- `⏳` in progress (transcribing / authoring)
+- `⬜` pending
+- `❌` left behind (failed the stage-3 guard — needs a retry)
+
+```
+Processing playlist — 12 videos
+✅ 1. 8 Foods I Eat EVERY DAY as an ER Doctor    → 29-06-2026-16.md
+✅ 2. Stop Walking 10,000 Steps a Day            → 29-06-2026-17.md
+⏳ 3. I Wore An Apple Watch, Oura, Whoop…        (transcribing)
+⬜ 4. …
+2/12 done
+```
+
+(Optionally also back this with the harness Task tools — one task per video, set
+`in_progress`/`completed` — for a live UI checklist. The printed checklist is the
+required, always-works mechanism.)
 
 ## Finish
 
@@ -107,11 +143,13 @@ Run **only after `fetch-and-prep.sh` has finished**. Process each
   nothing. (A stray `.DS_Store` file is harmless and ignored by every loop;
   remove it if you want the folder truly empty.)
 - Report: how many notes were created and where, plus any folders deliberately
-  left behind (failed the stage-0 guard) and why.
+  left behind (`❌`, failed the guard) and why.
 
 ## Partial-failure behavior (expected, not a bug)
 
-A video that fails to download or transcribe lacks the inputs stage 4 needs, so
-its folder is **left in place** for a retry rather than deleted. "Nothing left in
-`download-video/`" holds for the all-success case; a surviving folder is the
-explicit signal of which video needs another pass — just re-run this skill.
+A video that fails to download lacks the `.mp3` that transcribe needs, so it has no
+`.srt` and fails the stage-3 guard — its folder is **left in place** for a retry
+rather than deleted. "Nothing left in `download-video/`" holds for the all-success
+case; a surviving folder is the explicit signal of which video needs another pass.
+Just re-run this skill — `download.sh` skips already-downloaded files, and the
+per-video loop simply never sees the videos whose folders were already removed.
