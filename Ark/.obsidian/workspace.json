@@ -11,14 +11,13 @@
             "id": "2e3442c886d1e8b6",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "bases",
               "state": {
-                "file": "Learning/06/29-06-2026-27.md",
-                "mode": "preview",
-                "source": false
+                "file": "Blog/filter.base",
+                "viewName": "Health"
               },
-              "icon": "lucide-file",
-              "title": "29-06-2026-27"
+              "icon": "lucide-table",
+              "title": "filter"
             }
           }
         ]
@@ -53,7 +52,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "[\"topic\"]",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -74,7 +73,8 @@
               "title": "Bookmarks"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -183,9 +183,13 @@
       "bases:Create new base": false
     }
   },
-  "active": "2e3442c886d1e8b6",
+  "active": "b6afb6f29abf875c",
   "lastOpenFiles": [
-    "Untitled.base",
+    "Invalid date.md",
+    "Blog/filter.base",
+    "Learning/06/29-06-2026-27.md",
+    "Blog",
+    "Podcast",
     "Learning/05/17-05-2026-1.md",
     "Learning/05/15-05-2026-6.md",
     "Learning/06/29-06-2026-1.md",
@@ -209,8 +213,6 @@
     "Learning/06/28-06-2026-1.md",
     "Learning/06/25-06-2026-12.md",
     "Learning/06/25-06-2026-11.md",
-    "Learning/06/25-06-2026-10.md",
-    "Learning/06/25-06-2026-9.md",
     "Misc/Thnmbnails/UH1NO4iiaoE.jpg",
     "Misc/Thnmbnails/BARmrmn-NfQ.jpg",
     "Misc/Thnmbnails/HzRcJsuzyBU.jpg",

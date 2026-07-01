@@ -1,0 +1,12 @@
+views:
+  - type: table
+    name: Health
+    filters:
+      and:
+        - note["watch date"] <= "2026-05-31"
+        - note["watch date"] >= "2026-05-01"
+        - topic.contains("Health")
+    order:
+      - file.name
+  - type: table
+    name: Investment
