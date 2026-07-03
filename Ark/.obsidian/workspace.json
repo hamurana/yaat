@@ -4,20 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "813ef65415c24ce5",
+        "id": "d6f4f4a551a8eba1",
         "type": "tabs",
         "children": [
           {
-            "id": "a190bcc1e396089b",
+            "id": "5ecdf8824ef1c9f3",
             "type": "leaf",
             "state": {
-              "type": "bases",
+              "type": "markdown",
               "state": {
-                "file": "Blog/filter.base",
-                "viewName": "Health"
+                "file": "Learning/05/14-05-2026-2.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-table",
-              "title": "filter"
+              "icon": "lucide-file",
+              "title": "14-05-2026-2"
             }
           }
         ]
@@ -52,7 +53,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "path:Learning [\"topic\": ",
+                "query": "",
                 "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": true,
@@ -73,8 +74,7 @@
               "title": "Bookmarks"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -183,10 +183,15 @@
       "bases:Create new base": false
     }
   },
-  "active": "b6afb6f29abf875c",
+  "active": "5ecdf8824ef1c9f3",
   "lastOpenFiles": [
-    "2026-07-03.md",
+    "Learning/05/15-05-2026-5.md",
+    "Learning/05/14-05-2026-2.md",
+    "Learning/07/01-07-2026-7.md",
+    "Learning/05/15-05-2026-4.md",
+    "Learning/07/01-07-2026-4.md",
     "Blog/filter.base",
+    "2026-07-03.md",
     "Invalid date.md",
     "Untitled.canvas",
     "Learning/07/01-07-2026-1.md",
@@ -214,10 +219,6 @@
     "Learning/06/29-06-2026-12.md",
     "Learning/06/29-06-2026-11.md",
     "Learning/06/29-06-2026-10.md",
-    "Learning/06/29-06-2026-9.md",
-    "Learning/06/29-06-2026-8.md",
-    "Learning/06/29-06-2026-7.md",
-    "Learning/06/29-06-2026-6.md",
     "Misc/Thnmbnails/UH1NO4iiaoE.jpg",
     "Misc/Thnmbnails/BARmrmn-NfQ.jpg",
     "Misc/Thnmbnails/HzRcJsuzyBU.jpg",
