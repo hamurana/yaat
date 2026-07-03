@@ -5,7 +5,7 @@ views:
       and:
         - note["watch date"] <= "2026-05-31"
         - note["watch date"] >= "2026-05-01"
-        - topic.contains("Health")
+        - topic == ["Health"]
     order:
       - file.name
       - topic

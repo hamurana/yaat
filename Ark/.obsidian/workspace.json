@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "44d03cd014eea754",
+        "id": "813ef65415c24ce5",
         "type": "tabs",
         "children": [
           {
-            "id": "2e3442c886d1e8b6",
+            "id": "a190bcc1e396089b",
             "type": "leaf",
             "state": {
               "type": "bases",
@@ -53,9 +53,9 @@
               "type": "search",
               "state": {
                 "query": "",
-                "matchingCase": false,
+                "matchingCase": true,
                 "explainSearch": false,
-                "collapseAll": false,
+                "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical"
               },
@@ -77,7 +77,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 363.5
   },
   "right": {
     "id": "e8a6f60122f16b8c",
@@ -182,14 +182,24 @@
       "bases:Create new base": false
     }
   },
-  "active": "bc7c3e52ac465d83",
+  "active": "a190bcc1e396089b",
   "lastOpenFiles": [
+    "2026-07-03.md",
+    "Blog/filter.base",
+    "Invalid date.md",
+    "Untitled.canvas",
+    "Learning/07/01-07-2026-1.md",
+    "Learning/07/01-07-2026-2.md",
+    "Learning/05/12-05-2026-3.md",
+    "Learning/05/12-05-2026-1.md",
+    "Learning/05/11-05-2026-1.md",
+    "Learning/06/29-06-2026-13.md",
+    "Learning/06/24-06-2026-7.md",
+    "Learning/07/02-07-2026-1.md",
     "Podcast/publish",
     "Podcast/draft",
     "Blog/publish",
     "Blog/draft",
-    "Invalid date.md",
-    "Blog/filter.base",
     "Learning/06/29-06-2026-27.md",
     "Blog",
     "Podcast",
@@ -200,7 +210,6 @@
     "Learning/06/28-06-2026-2.md",
     "Learning/06/29-06-2026-15.md",
     "Learning/06/29-06-2026-14.md",
-    "Learning/06/29-06-2026-13.md",
     "Learning/06/29-06-2026-12.md",
     "Learning/06/29-06-2026-11.md",
     "Learning/06/29-06-2026-10.md",
@@ -208,14 +217,6 @@
     "Learning/06/29-06-2026-8.md",
     "Learning/06/29-06-2026-7.md",
     "Learning/06/29-06-2026-6.md",
-    "Learning/06/29-06-2026-5.md",
-    "Learning/06/29-06-2026-3.md",
-    "Learning/06/24-06-2026-13.md",
-    "Learning/06/24-06-2026-12.md",
-    "Learning/06/29-06-2026-2.md",
-    "Learning/06/28-06-2026-1.md",
-    "Learning/06/25-06-2026-12.md",
-    "Learning/06/25-06-2026-11.md",
     "Misc/Thnmbnails/UH1NO4iiaoE.jpg",
     "Misc/Thnmbnails/BARmrmn-NfQ.jpg",
     "Misc/Thnmbnails/HzRcJsuzyBU.jpg",
@@ -228,7 +229,6 @@
     "Misc/Thnmbnails/YMdhhnJ7w_o.jpg",
     "Misc/Thnmbnails",
     "Misc",
-    "Learning/06",
-    "Learning/05"
+    "Learning/06"
   ]
 }
