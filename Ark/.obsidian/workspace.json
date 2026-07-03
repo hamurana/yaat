@@ -52,7 +52,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "path:Learning [\"topic\": ",
                 "matchingCase": true,
                 "explainSearch": false,
                 "collapseAll": true,
@@ -73,7 +73,8 @@
               "title": "Bookmarks"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -182,7 +183,7 @@
       "bases:Create new base": false
     }
   },
-  "active": "a190bcc1e396089b",
+  "active": "b6afb6f29abf875c",
   "lastOpenFiles": [
     "2026-07-03.md",
     "Blog/filter.base",
