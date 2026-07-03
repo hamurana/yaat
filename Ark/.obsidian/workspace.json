@@ -52,7 +52,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "[\"topic\"]",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -73,8 +73,7 @@
               "title": "Bookmarks"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -183,8 +182,12 @@
       "bases:Create new base": false
     }
   },
-  "active": "b6afb6f29abf875c",
+  "active": "bc7c3e52ac465d83",
   "lastOpenFiles": [
+    "Podcast/publish",
+    "Podcast/draft",
+    "Blog/publish",
+    "Blog/draft",
     "Invalid date.md",
     "Blog/filter.base",
     "Learning/06/29-06-2026-27.md",
@@ -226,7 +229,6 @@
     "Misc/Thnmbnails",
     "Misc",
     "Learning/06",
-    "Learning/05",
-    "Learning"
+    "Learning/05"
   ]
 }

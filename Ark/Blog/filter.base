@@ -8,5 +8,7 @@ views:
         - topic.contains("Health")
     order:
       - file.name
+      - topic
+      - title
   - type: table
     name: Investment
