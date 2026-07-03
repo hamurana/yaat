@@ -16,7 +16,13 @@ this skill will analyse the meta.json file that skill /youtube-video-downloader 
 this skll creates a Obsidian note, it consists 2 main parts, heder and main body. where header fields list important meta information, while main body contains the transcribed text of the video.
 
 ### process-video
-this skill orchestrates these skills - youtube-video-downloader trajnscribe-audio extract-video-meta build-ark-note, this skill is the  initiator
+this skill orchestrates these skills - youtube-video-downloader trajnscribe-audio extract-video-meta build-ark-note, this skill is the  initiator.
+```
+/process-video
+```
 
 ### produce-blog
 this skill reads reference file in folder blog-factory, it will use referenced notes as study guide, it will study it, draws own conclusion, then does own research, find support, then create a blog in Markdown format, save it in the same folder.
+```
+/produce-blog
+```
