@@ -22,17 +22,17 @@
 # overwrite a record written today); only newly added videos get processed.
 #
 # Usage: extract-meta.sh [DIR]
-#   DIR defaults to "download-video" relative to the current directory.
+#   DIR defaults to "video-injest/download-video" relative to the current directory.
 #   DIR may be EITHER a base folder of video subfolders (batch mode) OR a single
 #   video folder (per-video mode). If the folder itself directly contains an
 #   *.info.json, it is treated as one video; otherwise its immediate subfolders
 #   are each treated as a video. This lets the process-video pipeline extract one
-#   folder at a time while the original `extract-meta.sh download-video` batch
+#   folder at a time while the original `extract-meta.sh video-injest/download-video` batch
 #   call keeps working unchanged.
 
 set -u
 
-BASE_DIR="${1:-download-video}"
+BASE_DIR="${1:-video-injest/download-video}"
 
 if [[ ! -d "$BASE_DIR" ]]; then
   echo "ERROR: base folder not found: $BASE_DIR" >&2

@@ -1,12 +1,12 @@
 ---
 name: transcribe-audio
-description: Batch-transcribe downloaded YouTube audio into .srt subtitle files using openai-whisper (base model). Use this whenever the user wants to transcribe audio, generate subtitles or captions, run whisper over the download-video folder, turn MP3s into text/SRT, or process newly downloaded videos into transcripts. Triggers on phrases like "transcribe the audio", "make subtitles", "run whisper", "generate srt files", or any request to convert the downloaded MP3s into transcripts — even if the user doesn't name whisper or srt explicitly.
+description: Batch-transcribe downloaded YouTube audio into .srt subtitle files using openai-whisper (base model). Use this whenever the user wants to transcribe audio, generate subtitles or captions, run whisper over the video-injest/download-video folder, turn MP3s into text/SRT, or process newly downloaded videos into transcripts. Triggers on phrases like "transcribe the audio", "make subtitles", "run whisper", "generate srt files", or any request to convert the downloaded MP3s into transcripts — even if the user doesn't name whisper or srt explicitly.
 ---
 
 # Transcribe Audio
 
 Convert every downloaded video's MP3 into an `.srt` subtitle file with
-openai-whisper, walking each subfolder of `download-video/` in turn.
+openai-whisper, walking each subfolder of `video-injest/download-video/` in turn.
 
 ## Layout this skill expects
 
@@ -14,7 +14,7 @@ The `youtube-video-downloader` skill leaves one folder per video, each holding
 three files:
 
 ```
-download-video/
+video-injest/download-video/
   <Title>/
     <Title>.mp3        <- source audio (input)
     <Title>.info.json  <- yt-dlp metadata (leave alone)
@@ -34,7 +34,7 @@ bash .claude/skills/transcribe-audio/scripts/transcribe.sh
 ```
 
 Pass a different base folder as the first argument if needed
-(`bash .../transcribe.sh some-other-folder`). The default is `download-video`.
+(`bash .../transcribe.sh some-other-folder`). The default is `video-injest/download-video`.
 
 When it finishes, report the summary line it prints: how many folders were
 found, transcribed, skipped, and failed.

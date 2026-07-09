@@ -1,13 +1,13 @@
 ---
 name: extract-video-meta
-description: Extract a compact metadata record from each downloaded video's yt-dlp .info.json and save it as <Title>.meta.json. Use whenever the user wants to pull, extract, or summarise video metadata, build .meta.json files, get the published date / channel / category / source URL out of the info.json files, or otherwise distil the download-video folder's metadata. Triggers on phrases like "extract video meta", "make meta.json", "pull the metadata", "get publish dates and channels", or any request to turn the info.json files into a trimmed metadata file.
+description: Extract a compact metadata record from each downloaded video's yt-dlp .info.json and save it as <Title>.meta.json. Use whenever the user wants to pull, extract, or summarise video metadata, build .meta.json files, get the published date / channel / category / source URL out of the info.json files, or otherwise distil the video-injest/download-video folder's metadata. Triggers on phrases like "extract video meta", "make meta.json", "pull the metadata", "get publish dates and channels", or any request to turn the info.json files into a trimmed metadata file.
 ---
 
 # Extract Video Meta
 
 For every downloaded video, read the rich `<Title>.info.json` yt-dlp produced and
 write a trimmed `<Title>.meta.json` beside it, keeping only six fields. Walks each
-subfolder of `download-video/` in turn.
+subfolder of `video-injest/download-video/` in turn.
 
 ## Layout this skill expects
 
@@ -15,7 +15,7 @@ The `youtube-video-downloader` skill leaves one folder per video, each holding
 the source `.info.json` (plus the `.mp3`, `.jpg`, and possibly an `.srt`):
 
 ```
-download-video/
+video-injest/download-video/
   <Title>/
     <Title>.info.json  <- yt-dlp metadata (input, leave alone)
     <Title>.mp3        <- audio (leave alone)
@@ -95,7 +95,7 @@ After running the script, do an inference pass over every `.meta.json` whose
 
 No `.meta.json` should be left with `category` equal to `"__INFER__"` when the
 skill finishes. If a previous interrupted run left sentinels behind, sweep them
-up too (`grep -rl '"__INFER__"' download-video`), since folders that already have
+up too (`grep -rl '"__INFER__"' video-injest/download-video`), since folders that already have
 a `.meta.json` are skipped by the script on re-runs.
 
 ## How to run it
@@ -108,7 +108,7 @@ bash .claude/skills/extract-video-meta/scripts/extract-meta.sh
 ```
 
 Pass a different base folder as the first argument if needed
-(`bash .../extract-meta.sh some-other-folder`). The default is `download-video`.
+(`bash .../extract-meta.sh some-other-folder`). The default is `video-injest/download-video`.
 
 When it finishes, report the summary line it prints: how many folders were
 found, written, skipped, and failed.

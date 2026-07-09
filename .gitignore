@@ -1,6 +1,6 @@
-# Downloaded YouTube audio + metadata (re-derivable from video.json via the
+# Downloaded YouTube audio + metadata (re-derivable from video-injest/video.json via the
 # youtube-video-downloader skill — kept local, never committed)
-download-video/
+video-injest/download-video/
 
 # OS / editor cruft
 .DS_Store

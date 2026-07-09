@@ -1,12 +1,12 @@
 ---
 name: process-video
-description: Run the full YouTube-to-Ark pipeline end to end — download every video in the nominated playlist, then process them one at a time (transcribe, extract metadata, build one curated Obsidian note in the Ark vault, and delete the source folder) until download-video/ ends up empty. Use whenever the user wants to "process the videos", "process the playlist", "run the whole/full pipeline", "download and build the Ark notes", or otherwise take a playlist all the way from URL to finished knowledge-base notes in one go. This orchestrates the youtube-video-downloader, transcribe-audio, extract-video-meta, and build-ark-note skills in the correct dependency order.
+description: Run the full YouTube-to-Ark pipeline end to end — download every video in the nominated playlist, then process them one at a time (transcribe, extract metadata, build one curated Obsidian note in the Ark vault, and delete the source folder) until video-injest/download-video/ ends up empty. Use whenever the user wants to "process the videos", "process the playlist", "run the whole/full pipeline", "download and build the Ark notes", or otherwise take a playlist all the way from URL to finished knowledge-base notes in one go. This orchestrates the youtube-video-downloader, transcribe-audio, extract-video-meta, and build-ark-note skills in the correct dependency order.
 ---
 
 # Process Video (full pipeline)
 
-End-to-end orchestrator. Takes the playlist URLs in `video.json` all the way to
-finished **Ark** notes, then leaves `download-video/` empty. It chains four
+End-to-end orchestrator. Takes the playlist URLs in `video-injest/video.json` all the way to
+finished **Ark** notes, then leaves `video-injest/download-video/` empty. It chains four
 existing skills — it does **not** reimplement them.
 
 The shape is: **download is batch** (one resilient yt-dlp pass over the whole
@@ -19,19 +19,19 @@ re-running resumes cleanly.
 ## Pipeline stages and their dependencies
 
 ```
-video.json
+video-injest/video.json
    │ 1. download (yt-dlp)          BATCH, one pass per playlist URL
-   ▼                               produces: download-video/<Title>/{.mp3,.info.json,.jpg}
-download-video/
+   ▼                               produces: video-injest/download-video/<Title>/{.mp3,.info.json,.jpg}
+video-injest/download-video/
    │
    │  ── then, PER VIDEO (for each <Title>/ folder, one at a time) ──
    │   2. transcribe (whisper)     needs: .mp3        produces: .srt
    │   3. extract-meta (jq)        needs: .info.json  produces: .meta.json
    │   4. build-ark-note           needs: .srt AND .meta.json AND .jpg
    │                               produces: Ark/Learning/<MM>/<DD-MM-YYYY>-<N>.md + thumbnail
-   │   5. delete download-video/<Title>/   (marks this video done)
+   │   5. delete video-injest/download-video/<Title>/   (marks this video done)
    ▼
-Ark/   (download-video/ ends up empty)
+Ark/   (video-injest/download-video/ ends up empty)
 ```
 
 **Order is not optional.** The batch download must finish first (stages 2–4 need
@@ -49,40 +49,40 @@ block silently:
 ```bash
 bash .claude/skills/process-video/scripts/download.sh
 # watch in another terminal (or periodically tail it yourself):
-tail -f download-video/process-video.log
+tail -f video-injest/download-video/process-video.log
 ```
 
-`download.sh` does one resilient yt-dlp pass per playlist URL in `video.json`
-(per CLAUDE.md §4 — **not** the "enumerate then download each" flow), with
-`--ignore-errors --no-overwrites` so one bad video doesn't abort the batch and a
-re-run skips already-downloaded files. Optional args: `download.sh [video.json]
-[download-video]`. It mirrors all output to `download-video/process-video.log`
+`download.sh` does one resilient yt-dlp pass per playlist URL in
+`video-injest/video.json` (per CLAUDE.md §4 — **not** the "enumerate then
+download each" flow), with `--ignore-errors --no-overwrites` so one bad video
+doesn't abort the batch and a re-run skips already-downloaded files. Optional
+args: `download.sh [video-injest/video.json] [video-injest/download-video]`. It mirrors all output to `video-injest/download-video/process-video.log`
 (truncated each run) with `PYTHONUNBUFFERED=1` so yt-dlp progress streams live.
 
-When it finishes, report how many video folders landed in `download-video/`.
+When it finishes, report how many video folders landed in `video-injest/download-video/`.
 
 ### Stages 2–5 — process each video, one at a time
 
 After the download finishes, list the folders and count them:
 
 ```bash
-find download-video -mindepth 1 -maxdepth 1 -type d | sort
+find video-injest/download-video -mindepth 1 -maxdepth 1 -type d | sort
 ```
 
 Let **N** be that count. Print the progress checklist (below) once, then loop over
-the folders **one at a time**. For each `download-video/<Title>/`:
+the folders **one at a time**. For each `video-injest/download-video/<Title>/`:
 
 1. **Transcribe just this video** (whisper). The script auto-detects a single
    video folder, so pass the folder itself:
    ```bash
-   bash .claude/skills/transcribe-audio/scripts/transcribe.sh "download-video/<Title>"
+   bash .claude/skills/transcribe-audio/scripts/transcribe.sh "video-injest/download-video/<Title>"
    ```
    whisper can take minutes — run this **backgrounded** and continue once it
    completes, to avoid the foreground command timeout.
 
 2. **Extract metadata for just this video** (jq):
    ```bash
-   bash .claude/skills/extract-video-meta/scripts/extract-meta.sh "download-video/<Title>"
+   bash .claude/skills/extract-video-meta/scripts/extract-meta.sh "video-injest/download-video/<Title>"
    ```
 
 3. **Precondition guard — required before any delete.** Confirm the folder now
@@ -94,7 +94,7 @@ the folders **one at a time**. For each `download-video/<Title>/`:
 
 4. **Prepare the mechanical note parts:**
    ```bash
-   bash .claude/skills/build-ark-note/scripts/prepare-note.sh "download-video/<Title>"
+   bash .claude/skills/build-ark-note/scripts/prepare-note.sh "video-injest/download-video/<Title>"
    ```
    Read back `NOTE_PATH=...` and the block between the `FRONTMATTER` markers.
 
@@ -110,7 +110,7 @@ the folders **one at a time**. For each `download-video/<Title>/`:
 
 6. **Mark this video done — only after the note is written:**
    ```bash
-   rm -rf "download-video/<Title>"
+   rm -rf "video-injest/download-video/<Title>"
    ```
    Update the checklist (`✅` + note filename) and reprint it.
 
@@ -139,7 +139,7 @@ required, always-works mechanism.)
 
 ## Finish
 
-- Verify nothing is left: `find download-video -mindepth 1 -type d` returns
+- Verify nothing is left: `find video-injest/download-video -mindepth 1 -type d` returns
   nothing. (A stray `.DS_Store` file is harmless and ignored by every loop;
   remove it if you want the folder truly empty.)
 - Report: how many notes were created and where, plus any folders deliberately
@@ -149,7 +149,7 @@ required, always-works mechanism.)
 
 A video that fails to download lacks the `.mp3` that transcribe needs, so it has no
 `.srt` and fails the stage-3 guard — its folder is **left in place** for a retry
-rather than deleted. "Nothing left in `download-video/`" holds for the all-success
+rather than deleted. "Nothing left in `video-injest/download-video/`" holds for the all-success
 case; a surviving folder is the explicit signal of which video needs another pass.
 Just re-run this skill — `download.sh` skips already-downloaded files, and the
 per-video loop simply never sees the videos whose folders were already removed.

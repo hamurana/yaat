@@ -13,17 +13,17 @@
 # after an interruption resumes where it left off instead of redoing work.
 #
 # Usage: transcribe.sh [DIR]
-#   DIR defaults to "download-video" relative to the current directory.
+#   DIR defaults to "video-injest/download-video" relative to the current directory.
 #   DIR may be EITHER a base folder of video subfolders (batch mode) OR a single
 #   video folder (per-video mode). If the folder itself directly contains an
 #   *.mp3, it is treated as one video; otherwise its immediate subfolders are
 #   each treated as a video. This lets the process-video pipeline transcribe one
-#   folder at a time while the original `transcribe.sh download-video` batch call
+#   folder at a time while the original `transcribe.sh video-injest/download-video` batch call
 #   keeps working unchanged.
 
 set -u
 
-BASE_DIR="${1:-download-video}"
+BASE_DIR="${1:-video-injest/download-video}"
 MODEL="base"
 
 if [[ ! -d "$BASE_DIR" ]]; then

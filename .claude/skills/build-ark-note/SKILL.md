@@ -1,14 +1,14 @@
 ---
 name: build-ark-note
-description: Turn each processed video in download-video/ into a curated Obsidian note in the Ark Learning vault, with its thumbnail wired up, then delete the source folder. Use whenever the user wants to build Ark notes, create the Obsidian/Learning note for a video, add a downloaded video to the knowledge base, summarise the transcript into Ark, or finish the pipeline after transcription and metadata extraction. Triggers on phrases like "build the Ark note", "add this video to Ark", "create the Learning note", "process the download-video folder into the vault", or "summarise these into the knowledge base".
+description: Turn each processed video in video-injest/download-video/ into a curated Obsidian note in the Ark Learning vault, with its thumbnail wired up, then delete the source folder. Use whenever the user wants to build Ark notes, create the Obsidian/Learning note for a video, add a downloaded video to the knowledge base, summarise the transcript into Ark, or finish the pipeline after transcription and metadata extraction. Triggers on phrases like "build the Ark note", "add this video to Ark", "create the Learning note", "process the video-injest/download-video folder into the vault", or "summarise these into the knowledge base".
 ---
 
 # Build Ark Note
 
-Final stage of the pipeline. For every video folder under `download-video/`, this
+Final stage of the pipeline. For every video folder under `video-injest/download-video/`, this
 skill produces one clean Obsidian note in the **Ark** vault (`Ark/Learning/`),
 copies the thumbnail into the vault, then deletes the source folder so
-`download-video/` only ever holds unprocessed work.
+`video-injest/download-video/` only ever holds unprocessed work.
 
 This runs **after** `transcribe-audio` (makes the `.srt`) and `extract-video-meta`
 (makes the `.meta.json`).
@@ -16,7 +16,7 @@ This runs **after** `transcribe-audio` (makes the `.srt`) and `extract-video-met
 ## Layout this skill expects
 
 ```
-download-video/
+video-injest/download-video/
   <Title>/
     <Title>.jpg        <- thumbnail (input)
     <Title>.srt        <- transcript, summarised into the note body (input)
@@ -65,12 +65,12 @@ there; do not create a second folder).
 
 ## How to run it — per video, in order
 
-For each `download-video/<Title>/` folder, one at a time:
+For each `video-injest/download-video/<Title>/` folder, one at a time:
 
 1. **Prepare** the mechanical parts with the helper. It copies the thumbnail,
    computes the note path, and prints the frontmatter + embed header:
    ```bash
-   bash .claude/skills/build-ark-note/scripts/prepare-note.sh "download-video/<Title>"
+   bash .claude/skills/build-ark-note/scripts/prepare-note.sh "video-injest/download-video/<Title>"
    ```
    Read back `NOTE_PATH=...` and the block between the `FRONTMATTER` markers.
 
@@ -92,8 +92,8 @@ For each `download-video/<Title>/` folder, one at a time:
 
 4. **Delete** the source folder only after the note is written:
    ```bash
-   rm -rf "download-video/<Title>"
+   rm -rf "video-injest/download-video/<Title>"
    ```
 
 When all folders are done, report: how many notes were created, where, and confirm
-`download-video/` is empty.
+`video-injest/download-video/` is empty.

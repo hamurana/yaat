@@ -2,7 +2,7 @@
 #
 # prepare-note.sh — mechanical setup for one Ark Learning note.
 #
-# Given a single download-video/<Title>/ folder, this script handles the
+# Given a single video-injest/download-video/<Title>/ folder, this script handles the
 # deterministic parts of building the note (everything except the summary body,
 # which Claude must author from the .srt):
 #
@@ -15,7 +15,7 @@
 # writes the file (frontmatter + authored summary) and deletes the folder after.
 #
 # Usage:
-#   bash .claude/skills/build-ark-note/scripts/prepare-note.sh "download-video/<Title>"
+#   bash .claude/skills/build-ark-note/scripts/prepare-note.sh "video-injest/download-video/<Title>"
 #
 # Output (stdout): two labelled blocks —
 #   NOTE_PATH=Ark/Learning/06/28-06-2026-1.md
@@ -25,7 +25,7 @@
 
 set -euo pipefail
 
-VIDEO_DIR="${1:?usage: prepare-note.sh <download-video/Title-folder>}"
+VIDEO_DIR="${1:?usage: prepare-note.sh <video-injest/download-video/Title-folder>}"
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../../.." && pwd)"
 THUMB_DIR="$REPO_ROOT/Ark/Misc/Thnmbnails"
 LEARNING_DIR="$REPO_ROOT/Ark/Learning"

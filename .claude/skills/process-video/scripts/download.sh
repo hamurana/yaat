@@ -7,8 +7,8 @@
 # extract-meta -> build-ark-note -> delete the folder) over each subfolder. See
 # the process-video SKILL.md.
 #
-#   download   yt-dlp over every playlist URL in video.json
-#                -> download-video/<Title>/{<Title>.mp3,.info.json,.jpg}
+#   download   yt-dlp over every playlist URL in video-injest/video.json
+#                -> video-injest/download-video/<Title>/{<Title>.mp3,.info.json,.jpg}
 #
 # Flags follow CLAUDE.md §4: extract mp3, write info.json + jpg thumbnail,
 # suppress the stray playlist-metadata folder (--no-write-playlist-metafiles),
@@ -20,13 +20,13 @@
 # abort the batch. yt-dlp's --no-overwrites makes re-running resume cleanly.
 #
 # Usage: download.sh [JSON] [BASE_DIR]
-#   JSON     defaults to "video.json"     (array of playlist URLs)
-#   BASE_DIR defaults to "download-video"
+#   JSON     defaults to "video-injest/video.json"     (array of playlist URLs)
+#   BASE_DIR defaults to "video-injest/download-video"
 
 set -u
 
-JSON="${1:-video.json}"
-BASE="${2:-download-video}"
+JSON="${1:-video-injest/video.json}"
+BASE="${2:-video-injest/download-video}"
 
 # --- live log --------------------------------------------------------------
 # Mirror everything (this script's banners + yt-dlp's stdout/stderr) to the
