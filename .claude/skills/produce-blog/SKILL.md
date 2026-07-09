@@ -32,9 +32,15 @@ Resolve every row before writing anything. If a note is missing, report the gap 
 
 Read all referenced notes in full and absorb the substance. Only after absorbing the whole set, find the **thesis angle**: the claim or tension that connects the notes — one no single video states outright but the batch collectively points to. This becomes *your* argument. Don't default to "N tips from N videos", and don't organise the post around the videos as objects.
 
+The formula that has worked on every run so far: **name the single upstream variable the whole batch shares, then argue that every technique in the notes is downstream of it.** Worked examples:
+- *Health*: insulin resistance is the silent throughline — cheap daily movement beats the supplement economy.
+- *Charisma*: charisma isn't performance, it's the absence of need ("want it, don't need it") — humor, small talk, listening, and gravitas techniques are all symptoms of that one state.
+
 ### 2. Research the thesis independently
 
 Before writing, back the argument with your own material. Run `WebSearch`/`WebFetch` for real studies, data, and examples that support (or usefully complicate) the core claims — especially any specific mechanism, dose, or statistic you're going to assert. Prefer primary/authoritative sources (journals, PubMed/PMC, recognised bodies). Collect the URLs; you'll cite them inline and list them at the end. Where research refines a figure from the notes, use the researched figure.
+
+The efficient shape of this step: **list the core claims the argument leans on, then run one targeted search per claim — ~6–8 searches total, issued in parallel batches of 2–3.** Aim each search at the **canonical named study** behind the technique, not a generic topic query (e.g. spotlight effect → Gilovich 2000; question-asking → Huang 2017; deep questions → Aron 1997's 36-questions study; listening → Itzchakov & Kluger; humor → McGraw & Warren's benign violation theory; vocal pitch → Klofstad 2012). Cite the journal/PDF link when reachable; a reputable secondary summary (e.g. BPS Research Digest) is acceptable when the paper is paywalled. Give each "Sources & further reading" entry authors + year + journal.
 
 ### 3. Match the writing style to the topic
 
@@ -42,7 +48,7 @@ The base rules are the Blog Post Generation Standards in `.claude/CLAUDE.md` (Se
 
 - **Health / medical** — evidence-first. State mechanisms, doses, and statistics exactly, as researched fact with a citation, and keep honest hedges and safety caveats ("modest, consistent effect", "check with a doctor", kidney-disease exceptions).
 - **Investment / Business** — numbers and frameworks carry the piece. Name companies, figures, and framework names verbatim; flag speculation as opinion.
-- **Style / Charisma / self-improvement** — more personal, second-person, example-driven. Keep specific product/garment/technique names.
+- **Style / Charisma / self-improvement** — more personal, second-person, example-driven. Keep specific product/garment/technique names. Confirmed shape from the Charisma run: research citations woven into an opinionated argument (not an evidence review), and the closing "so what" written as a **numbered drill list** of small concrete reps ("give someone 10 minutes of full attention", "swap one *what* for one *why* per conversation") — one drill per section, mapping back to the argument.
 - Anything else: infer the register from the subject matter.
 
 ### 4. Precision rules
@@ -51,6 +57,7 @@ The base rules are the Blog Post Generation Standards in `.claude/CLAUDE.md` (Se
 - A factual claim (statistic, dose, study result) needs a real cited source. Illustrative analogies and everyday scenarios don't — use them freely for clarity.
 - Genuine conflicts in the evidence are content, not problems — surface them.
 - Leaving a source's minor points out is fine; distorting the ones you keep is not.
+- **Banned words stay banned even when a note uses one legitimately.** A note's "carrot and stick *leverage*" is a real concept, but "leverage" is on the Section-2 ban list — substitute a precise alternative ("options", "walk-away power", "bargaining position") rather than importing the banned word.
 
 ### 5. Write the post
 
@@ -81,3 +88,9 @@ sources:
 ```
 
 When done, report: the thesis angle you argued, the key sources you researched and cited, the word count, and any rows that failed to resolve.
+
+To count body words (excluding frontmatter), don't strip the frontmatter with two sed `---` passes — line 1 *is* `---`, so that silently yields 0. Use:
+
+```bash
+awk 'c==2{print} /^---$/{c++}' blog-factory/<csv-basename>-blog.md | wc -w
+```

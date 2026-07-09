@@ -11,4 +11,13 @@ views:
       - topic
       - title
   - type: table
-    name: Investment
+    name: Charisma
+    filters:
+      and:
+        - note["watch date"] <= "2026-05-31"
+        - note["watch date"] >= "2026-05-01"
+        - topic == ["Charisma"]
+    order:
+      - file.name
+      - topic
+      - title
