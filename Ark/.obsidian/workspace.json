@@ -14,7 +14,7 @@
               "type": "bases",
               "state": {
                 "file": "Blog/filter.base",
-                "viewName": "Charisma"
+                "viewName": "Habit"
               },
               "icon": "lucide-table",
               "title": "filter"
@@ -185,6 +185,12 @@
   },
   "active": "5ecdf8824ef1c9f3",
   "lastOpenFiles": [
+    "Learning/07/10-07-2026-3.md",
+    "Misc/Thnmbnails/4zCSHi24Esw.jpg",
+    "Learning/07/10-07-2026-2.md",
+    "Misc/Thnmbnails/P2r7WHPniaI.jpg",
+    "Learning/07/10-07-2026-1.md",
+    "Misc/Thnmbnails/3db5MyGIUBE.jpg",
     "Learning/05/14-05-2026-2.md",
     "Learning/05/15-05-2026-5.md",
     "Learning/07/01-07-2026-7.md",
@@ -216,9 +222,6 @@
     "Learning/06/28-06-2026-2.md",
     "Learning/06/29-06-2026-15.md",
     "Learning/06/29-06-2026-14.md",
-    "Learning/06/29-06-2026-12.md",
-    "Learning/06/29-06-2026-11.md",
-    "Learning/06/29-06-2026-10.md",
     "Misc/Thnmbnails/UH1NO4iiaoE.jpg",
     "Misc/Thnmbnails/BARmrmn-NfQ.jpg",
     "Misc/Thnmbnails/HzRcJsuzyBU.jpg",
@@ -226,9 +229,6 @@
     "Misc/Thnmbnails/saLGnGU1suE.jpg",
     "Misc/Thnmbnails/YPnKKuWzR0Y.jpg",
     "Misc/Thnmbnails/T1-MJLh8UvA.jpg",
-    "Misc/Thnmbnails/d2iWIdrBXNM.jpg",
-    "Misc/Thnmbnails/sKJ7TJJKkqY.jpg",
-    "Misc/Thnmbnails/YMdhhnJ7w_o.jpg",
     "Misc/Thnmbnails",
     "Misc",
     "Learning/06"

@@ -35,12 +35,17 @@ Read all referenced notes in full and absorb the substance. Only after absorbing
 The formula that has worked on every run so far: **name the single upstream variable the whole batch shares, then argue that every technique in the notes is downstream of it.** Worked examples:
 - *Health*: insulin resistance is the silent throughline — cheap daily movement beats the supplement economy.
 - *Charisma*: charisma isn't performance, it's the absence of need ("want it, don't need it") — humor, small talk, listening, and gravitas techniques are all symptoms of that one state.
+- *Habit*: discipline isn't willpower, it's identity backed by evidence — every technique is a production method for proof that you keep promises to yourself.
+
+**When the batch disagrees internally, that tension IS the angle.** The Habit batch mixed "stop negotiating with yourself" grind talks with identity/mindset videos — the accepted piece treated the grind framing as the folk model the research complicates, and let that disagreement drive the argument. Don't paper over an internal conflict; build on it.
 
 ### 2. Research the thesis independently
 
 Before writing, back the argument with your own material. Run `WebSearch`/`WebFetch` for real studies, data, and examples that support (or usefully complicate) the core claims — especially any specific mechanism, dose, or statistic you're going to assert. Prefer primary/authoritative sources (journals, PubMed/PMC, recognised bodies). Collect the URLs; you'll cite them inline and list them at the end. Where research refines a figure from the notes, use the researched figure.
 
 The efficient shape of this step: **list the core claims the argument leans on, then run one targeted search per claim — ~6–8 searches total, issued in parallel batches of 2–3.** Aim each search at the **canonical named study** behind the technique, not a generic topic query (e.g. spotlight effect → Gilovich 2000; question-asking → Huang 2017; deep questions → Aron 1997's 36-questions study; listening → Itzchakov & Kluger; humor → McGraw & Warren's benign violation theory; vocal pitch → Klofstad 2012). Cite the journal/PDF link when reachable; a reputable secondary summary (e.g. BPS Research Digest) is acceptable when the paper is paywalled. Give each "Sources & further reading" entry authors + year + journal.
+
+**Failed replications are content, not obstacles.** Searching for a canonical study often surfaces its famous null (ego depletion → Hagger et al. 2016's 23-lab replication; Bryan 2011 "being a voter" → Gerber et al. 2016 field null). Cite both and hedge honestly — the conflict strengthens the piece's authority rather than weakening the claim.
 
 ### 3. Match the writing style to the topic
 
@@ -89,8 +94,8 @@ sources:
 
 When done, report: the thesis angle you argued, the key sources you researched and cited, the word count, and any rows that failed to resolve.
 
-To count body words (excluding frontmatter), don't strip the frontmatter with two sed `---` passes — line 1 *is* `---`, so that silently yields 0. Use:
+To count body words (excluding frontmatter), don't strip the frontmatter with two sed `---` passes — line 1 *is* `---`, so that silently yields 0. And don't use `c==2{print}` — any `---` horizontal rule in the body (e.g. the divider before "Sources & further reading") bumps the counter past 2 and silently truncates the count there. Use:
 
 ```bash
-awk 'c==2{print} /^---$/{c++}' blog-factory/<csv-basename>-blog.md | wc -w
+awk 'c>=2{print} /^---$/{c++}' blog-factory/<csv-basename>-blog.md | wc -w
 ```

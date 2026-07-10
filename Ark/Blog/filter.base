@@ -21,3 +21,14 @@ views:
       - file.name
       - topic
       - title
+  - type: table
+    name: Habit
+    filters:
+      and:
+        - note["watch date"] <= "2026-05-31"
+        - note["watch date"] >= "2026-05-01"
+        - topic == ["Habit"]
+    order:
+      - file.name
+      - topic
+      - title
