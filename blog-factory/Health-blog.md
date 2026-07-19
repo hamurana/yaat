@@ -1,7 +1,7 @@
 ---
-title: The Ten-Minute Habit That Beats Your Supplement Shelf
+title: The Disease Starts Ten Years Before the Diagnosis
 topic: Health
-date: 2026-07-03
+date: 2026-07-19
 sources:
   - 11-05-2026-1 — https://www.youtube.com/watch?v=49NYKRdWKJs
   - 12-05-2026-1 — https://www.youtube.com/watch?v=_ktZBXkFNUY
@@ -11,124 +11,91 @@ sources:
   - 15-05-2026-1 — https://www.youtube.com/watch?v=Bm8fq6DBkZo
 ---
 
-# The Ten-Minute Habit That Beats Your Supplement Shelf
+# The Disease Starts Ten Years Before the Diagnosis
 
-Your blood test lied to you. Not on purpose — it just measured the wrong thing at the wrong moment.
+Your last blood test said you were fine. That result is close to useless for the thing most likely to kill you.
 
-Every year millions of people get a "normal" fasting glucose result and walk out reassured. Meanwhile the actual problem has been building for a decade, invisible to that single number. The problem isn't sugar. It's insulin. And the fix isn't in a bottle — it's a ten-minute walk after dinner.
+The damage that ends in a heart attack, type 2 diabetes, or a fatty liver builds silently for **ten to fifteen years** before a single number on a standard panel moves. The mechanism has a name — insulin resistance — and it explains why so much health advice feels contradictory. It also explains why the supplement aisle is mostly theatre. One upstream variable connects post-meal walks, morning light, protein, sleep, and the muscle on your frame. Fix that variable with cheap daily inputs, and the pills you were sold become what they always were: a small support tool, or a marketing story.
 
-That's the whole argument. Here's why it holds up.
+This piece makes one argument. The single most valuable metabolic move you can make is not a supplement — it is contracting your muscles a few minutes after you eat, every day, for the rest of your life. Everything below is downstream of that.
 
-### The disease that hides behind a normal result
+### Your "normal" blood sugar is hiding a decade of damage
 
-Insulin resistance is the quiet engine behind most of what we call "lifestyle disease" — type 2 diabetes, fatty liver, high blood pressure, and a big slice of heart disease.
+Fasting glucose is a lagging indicator. By the time it drifts high enough to earn a "prediabetes" label, your body has been fighting to keep it normal for years — and losing quietly.
 
-Here's the mechanism. You eat, glucose rises, and your pancreas releases insulin to move that glucose into cells. Do this too often, with too much processed food and too little movement, and cells stop listening. So the pancreas shouts louder — it pumps out more insulin to get the same job done. Blood glucose stays normal. Insulin quietly climbs.
+The clearest evidence comes from the [Whitehall II study](https://www.thelancet.com/journals/lancet/article/PIIS014067360960619X/fulltext), which tracked over 6,500 British civil servants and mapped the metabolic trajectory of the 505 who developed type 2 diabetes. Their fasting glucose stayed nearly flat and normal for years, then rose steeply only in the **three to six years before diagnosis**. Insulin sensitivity, measured properly, had been declining for far longer. The disease was in motion long before the test caught it.
 
-That compensation is the trap. It works for years. Research puts the gap between the onset of insulin resistance and a diabetes diagnosis at roughly [10 to 15 years](https://pubmed.ncbi.nlm.nih.gov/34360563/) — a decade of damage while the standard fasting glucose test reads clean, propped up by all that extra insulin ([StatPearls: Insulin Resistance](https://www.ncbi.nlm.nih.gov/books/NBK507839/)).
+Here is the sequence. Every time blood glucose rises, the pancreas releases insulin to clear it. Do that thousands of times a year against a backdrop of ultra-processed food and long hours of sitting, and cells stop answering the door. The pancreas compensates by shouting louder — more insulin. Glucose stays normal on paper because all that extra insulin is holding the line. That compensation is the silent decade. High circulating insulin drives fat toward the liver and abdomen, stiffens blood vessels, and sets the stage for the "sudden" cardiac event that was never sudden.
 
-So the reassuring blood test is measuring the symptom that shows up last. By the time glucose climbs, the beta cells producing insulin are already failing. You've missed the ten-year window where the whole thing was easiest to reverse.
-
-Which raises the obvious question: if the standard test misses it, what actually moves the needle?
+This reframes heart disease entirely. The early signals are not chest-clutching drama — they are getting winded on one flight of stairs, an extra pillow needed at night, ankles that puff by evening, a resting heart rate that crept from 65 to 75. They read as "getting older." They are often the vasculature reporting years of quiet metabolic strain. So the real target is not next year's cholesterol number. It is the insulin load you carry every single day — and your muscles have a direct lever on it.
 
 ### Your muscles have a back door for glucose
 
-Muscle is the largest glucose sink in your body, and it has a feature most people never use on purpose.
+Skeletal muscle can pull glucose out of your blood **without any insulin at all**. This is the most under-exploited fact in everyday health.
 
-Normally, glucose gets into cells because insulin unlocks the door. But muscle has a second entrance that opens without insulin at all. When a muscle contracts, it moves glucose transporters (called GLUT4) to the cell surface through a pathway completely separate from insulin's ([Richter & Hargreaves, *Physiological Reviews*](https://journals.physiology.org/doi/full/10.1152/physrev.00038.2012)). Contraction itself pulls glucose out of the blood.
+When a muscle contracts, it moves GLUT4 glucose transporters to the cell surface through a contraction-triggered pathway that runs parallel to the insulin one — the mechanism is laid out in [Richter and Hargreaves' review in *Physiological Reviews*](https://journals.physiology.org/doi/full/10.1152/physrev.00038.2012). Translation: a walking muscle opens a second door for glucose, so the pancreas doesn't have to flood your system with insulin to clear the meal. You are doing the clearing mechanically.
 
-Read that again, because it's the hinge of everything. You do not need insulin to clear glucose from a meal. You need to move the muscle.
+The effect size is not trivial. A [2022 meta-analysis in *Sports Medicine*](https://link.springer.com/article/10.1007/s40279-022-01808-7) found that interrupting sitting with short bouts of light walking cut post-meal glucose by around **17%** versus staying seated, and beat simply standing up (about 9.5%). The dose required is almost insultingly small — even two to five minutes of ambling after a meal shifts the curve. Glucose that would linger in your bloodstream for two to three hours gets cleared in roughly half the time.
 
-This is why a walk after eating is not generic "exercise is good for you" advice. It's mechanically specific. The moment your legs start working, they open the insulin-free door and start draining glucose out of your bloodstream — which means your pancreas releases less insulin, and the whole toxic loop turns down a notch.
+The lever is the size of the muscle. Your quads and glutes are the biggest muscle groups you own, so a few squats during an ad break create a large metabolic demand and drain glucose fast. Housework counts — hoovering, stairs, carrying laundry are all contractions. You don't need all of it. Pick the one you'll actually repeat.
 
-And the timing turns out to matter more than the effort.
+Now the hard part, and the part that overturns most gym culture: **frequency beats intensity here.** Three short movement breaks spread across the day lower 24-hour glucose more than one hard gym session followed by eight hours in a chair. You can train five days a week and still build insulin resistance if you sit motionless after every meal, because prolonged sitting switches the muscle-uptake pathway off and hands the entire job back to insulin. The gym is not the problem. The chair after the meal is.
 
-### Timing beats duration
+### Movement compounds. Supplements mostly don't.
 
-Most people picture exercise as a block: an hour at the gym, then back to the chair. The data says that's the wrong shape.
+Each post-meal walk trims the insulin exposure of that meal by an estimated 20–30%. One walk is nothing. The same walk after ten thousand meals is a different metabolic life. This is compound interest, and it is the reason the cheap habit beats the expensive pill.
 
-In a study of older adults at risk for glucose intolerance, [three 15-minute walks — one after each meal — controlled 24-hour blood sugar better than a single 45-minute walk](https://diabetesjournals.org/care/article/36/10/3262/30770/Three-15-min-Bouts-of-Moderate-Postmeal-Walking) of the same total time. The post-meal timing did the work, not the extra minutes.
+The supplement economy sells the opposite model: a discrete product that delivers an edge, today, in a capsule. Test that promise against muscle itself. From roughly age 30 you lose [3–8% of muscle mass per decade](https://pmc.ncbi.nlm.nih.gov/articles/PMC5820209/), accelerating after 60 — and low grip strength predicts all-cause mortality better than many blood markers, tracking with about a 31% higher risk of death. Muscle is a glucose sink and a longevity organ. No supplement builds it. Progressive resistance work, enough protein, and sleep do. The thing that most improves your metabolism is tissue you grow, not a bottle you buy.
 
-A separate crossover trial made the point even sharper: telling people with type 2 diabetes to walk specifically *after meals* lowered glucose more than telling them to walk the same amount [whenever they liked](https://pubmed.ncbi.nlm.nih.gov/27747394/). Same walk. Better result. The only variable was *when*.
+So when someone claims a megadose pill redirects calories from fat to muscle, treat it as the tell it is. That specific viral claim rests on a **non-peer-reviewed rodent study** using doses that would be dangerous in humans. Meanwhile [pooled trials in older adults](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5248635/) show vitamin D supplementation produces **no meaningful gain in muscle strength or mobility** — and possibly harm at the top end. The four evidence-based drivers of muscle growth remain unglamorous: resistance training, protein, sleep, and adequate calories. A pill's only job is to remove a deficiency that's blocking the fundamentals — never to substitute for them.
 
-The practical takeaway is almost too simple. You don't need a gym, gear, or a spare hour. You need ten minutes on your feet in the window right after eating — the exact window when glucose is flooding in and your muscles can intercept it.
+Which raises the obvious question: when does a supplement actually earn its place?
 
-The flip side is the part nobody wants to hear.
+### When a pill actually earns its place
 
-### Sitting after meals is the real damage
+The honest rule is narrow. **A supplement is worth taking when it corrects a genuine deficit — not when it stacks a supraphysiological dose on top of fundamentals you haven't built.** Three cases from the everyday shelf show where the line falls.
 
-You can train hard at 6am and still lose the metabolic game by 8pm.
+**Vitamin D — correct a deficiency, don't chase an edge.** It behaves like a hormone: made in skin from sunlight, activated by liver and kidneys, involved in bone, immunity, and muscle. Genuine deficiency is common in low-sunlight countries and worth fixing, because correcting it improves muscle function and lowers fall risk in older adults. But the safe frame is a blood test followed by **400–1,000 IU/day**, with a widely accepted safety ceiling around **4,000 IU/day** above which [hypercalcemia and hypercalciuria climb](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7897606/). Excess raises blood calcium and can damage the kidneys and heart. More is not more. It is toxic.
 
-The person who does a proper gym session, then drives to work and sits for eight hours, then sits all evening, has two separate ledgers running. The workout is genuinely good for them. But the hours of stillness after every meal keep the insulin-free door shut, force insulin to do all the clearing, and push glucose toward storage. Muscle glucose uptake collapses when the muscle stops moving — that's the same GLUT4 pathway working in reverse.
+**Magnesium — plausible, modest, and diet-first.** This one is more defensible, because marginal intake is genuinely widespread once you account for processed food, chronic stress, alcohol, and medications like diuretics and proton pump inhibitors. A blood test won't reassure you either way — under 1% of body magnesium sits in blood, so a normal reading can mask low tissue stores. What do the trials actually deliver? A [2016 meta-analysis in *Hypertension*](https://www.ahajournals.org/doi/10.1161/HYPERTENSIONAHA.125.25129) of 34 randomized trials found roughly **368 mg/day** lowered blood pressure by about **2 mmHg systolic and 1.8 mmHg diastolic** — real, consistent, and small. Add modestly improved insulin sensitivity and fewer migraines for some. If you supplement, use **magnesium glycinate or citrate at 200–400 mg of *elemental* magnesium** (not the compound's total weight), taken with food; skip poorly absorbed oxide. Diarrhoea is the body's built-in overdose brake. Kidney disease, heart-rhythm disorders, or certain medications mean check with a doctor first.
 
-Contrast that with a nurse, a teacher, or a parent chasing a toddler. They may do zero "exercise." But they're rarely sitting still after a meal, so their glucose stays flatter across the whole day. Constant low-grade movement beats a single burst followed by stillness.
+**Glycine — a real but minor sleep aid.** In [Yamadera's polysomnography study](https://onlinelibrary.wiley.com/doi/10.1111/j.1479-8425.2007.00262.x), **3 grams of glycine** before bed shortened the time to sleep onset and to slow-wave sleep and improved subjective quality — likely via a small drop in core body temperature, one of the physiological triggers for deep sleep. Note the researched dose: **3 g**, not the ~10 g that circulates online. It is a mild, well-tolerated nudge, not a sedative, and it does nothing for the fundamentals below.
 
-The lesson isn't "skip the gym." It's that the chair after dinner quietly undoes more than the treadmill builds. Break up the sitting and you break the loop.
+The pattern holds across all three. Each supplement is a **support tool layered on top of fundamentals** — it can nudge a system already running well, and does close to nothing for one that isn't. Which is why the highest-yield "supplement" for sleep isn't in a bottle at all.
 
-Movement is free. Which is exactly why the next part deserves scrutiny.
+### Sleep is a cardiovascular event, not a luxury
 
-### The supplement shortcut is mostly an illusion
+Short sleep is not a lifestyle quirk you'll catch up on. It is a measurable cardiac risk factor.
 
-There is a multi-billion-pound industry built on selling you the feeling of doing something. Most of it can't clear a single meal's glucose the way a short walk does.
+[Cappuccio's 2011 meta-analysis in the *European Heart Journal*](https://academic.oup.com/eurheartj/article/32/12/1484/502022) pooled prospective data and found that habitually sleeping **under 6 hours** raised the risk of developing or dying from coronary heart disease by roughly **48%** and stroke by about **15%**. The heart uses the night to recover; deny it the window and blood pressure, insulin sensitivity, and vascular repair all degrade. Poor sleep also worsens next-day glucose handling — so it feeds straight back into the insulin-resistance loop this whole piece is built on.
 
-Take the viral claim that high-dose vitamin D redirects calories from fat to muscle. It traces back to a mouse study — not humans, not peer-reviewed, at doses that would be dangerous in a person. Vitamin D is real and useful. It behaves like a hormone, supports bone and immune function, and correcting a genuine deficiency helps, especially in low-sunlight countries. But "correcting a deficiency" and "megadosing for gains" are different universes.
+That is why sleep chemistry matters more than a melatonin tablet. Melatonin signals *when* to sleep; it does little for *how well*. Depth depends on a falling core temperature, rising GABA activity, and stable overnight fluid balance — which is where a warm chamomile drink (apigenin nudges GABA receptors), 3 g of glycine, and electrolytes to stop the 3 a.m. bathroom wake-up do modest, real work. Useful additions. But if you snore, wake with headaches, or never feel rested, no tea fixes that — get screened for sleep apnea. The tea is a ritual on top of the fundamentals. The fundamentals are the point.
 
-The high-dose version isn't just useless — it's a risk. Vitamin D toxicity drives blood calcium up, which can damage the kidneys and heart. Reviews put the safe long-term ceiling around [2,000 IU per day](https://pmc.ncbi.nlm.nih.gov/articles/PMC6158375/), far below the doses influencers promote, and even moderately high sustained doses raise the risk of hypercalcemia in some people. A sensible dose is 400–1,000 IU if a blood test shows you're low. Beyond that you're buying risk, not muscle.
+### Summary: the one variable, and what to do about it
 
-What actually builds muscle needs no bottle at all: progressively harder resistance training, enough protein, enough sleep, enough total calories. Vitamin D can't substitute for any of them.
+The through-line is insulin resistance — a decade-long, silent process that standard tests miss until it is well advanced. Heart disease, type 2 diabetes, fatty liver, and much of what we call "aging" share this upstream cause. The most powerful daily lever on it is muscle contraction after meals, which clears glucose without insulin and compounds across a lifetime the way no capsule can. Supplements earn a place only when they correct a real deficit — vitamin D in the genuinely deficient (and never above safe doses), magnesium for marginal intake, glycine as a mild sleep nudge — and never as a substitute for movement, protein, and sleep. Short sleep is a cardiovascular risk factor in its own right.
 
-So is every supplement theatre? No — and the exception is instructive.
+The "so what," as small daily reps. Each maps to a section above:
 
-### Magnesium: how to judge a supplement honestly
+1. **Move within 30 minutes of finishing a meal.** Two to five minutes minimum — a walk, ten squats, or the washing-up. This is the highest-yield habit in this article.
+2. **Break up sitting every 30–60 minutes.** A hard gym session does not buy back eight motionless hours; standing helps a little, walking helps more.
+3. **Do 5–10 minutes of resistance work daily.** Bodyweight squats and press-ups defend the muscle that is your biggest glucose sink and a top predictor of a long life.
+4. **Correct deficiencies, don't chase edges.** Blood-test vitamin D and dose to 400–1,000 IU; if you trial magnesium, use 200–400 mg elemental glycinate or citrate with food. Stop there.
+5. **Protect 7-plus hours of sleep as a cardiac appointment.** Dim lights at night, get outside light within an hour of waking, and if you snore or wake unrested, get screened for sleep apnea.
+6. **Cut ultra-processed food first.** It is the input driving the inflammation and insulin resistance every other habit is trying to undo.
 
-Magnesium is the case study in doing this right, because it neither deserves the hype nor the total dismissal.
-
-It's involved in hundreds of enzymatic reactions, and modern diets — low in nuts, seeds, leafy greens, and whole grains — leave a lot of people at the low end. A useful quirk: a blood test barely detects this, because under 1% of your body's magnesium sits in the blood. Normal bloodwork doesn't rule out being functionally short.
-
-The evidence is modest but real. A [systematic review of randomized trials](https://link.springer.com/article/10.1186/s41983-026-01150-z) supports magnesium for reducing migraine frequency, and a recent [placebo-controlled trial](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12412596/) found magnesium bisglycinate improved sleep in adults reporting poor sleep. These aren't miracle effects. They're small, consistent, and biologically sensible — which is exactly the bar a supplement should clear before it earns your money.
-
-If you try it, the specifics matter. Use magnesium glycinate or citrate, not the cheap oxide form that mostly gives you diarrhea. Aim for 200–400mg of *elemental* magnesium — the actual mineral, not the total pill weight. Take it with food, start low. And check with a doctor first if you have kidney disease or a heart rhythm problem.
-
-The rule this illustrates applies to everything on your shelf: fix a real deficiency, at a sane dose, with a form that works — and treat it as a top-up on good food, never a replacement. That same logic reaches its most important application at night.
-
-### Sleep is chemistry, not willpower
-
-If you lie awake wanting to sleep, the problem usually isn't discipline. It's that the chemical conditions for sleep aren't in place.
-
-And short sleep isn't a lifestyle quirk — it's a cardiac risk factor. A [dose-response meta-analysis](https://www.ahajournals.org/doi/10.1161/JAHA.118.008552) found cardiovascular risk climbing as sleep drops below seven hours, with the steepest jump under six. Pooled data across [hundreds of thousands of people](https://pubmed.ncbi.nlm.nih.gov/29206050/) shows the same. Your heart does its repair work overnight; cut the shift short and the repairs don't get done.
-
-Deep sleep has physical triggers, and the biggest is a drop in core body temperature. This is why the pre-sleep routines that work tend to lower your temperature — a warm shower that lets you cool afterward, a cool room. It's also why glycine has real evidence behind it: about [3 grams before bed lowers core temperature](https://www.sciencedirect.com/science/article/pii/S1347861319305729) via increased blood flow to the extremities, and [improves subjective and measured sleep quality](https://pmc.ncbi.nlm.nih.gov/articles/PMC3328957/).
-
-Notice what's missing: melatonin. Melatonin tells your body *when* to sleep, not *how well*. It can shorten how long you take to nod off while doing nothing for temperature or sleep depth — which is why so many people take it, fall asleep fine, and still wake unrefreshed. Fixing the chemistry beats forcing the timing.
-
-Put all of this together and a single picture emerges.
-
-### It all runs through one system
-
-These aren't six separate health tips. They're one story about one system: your metabolism, and how well your cells handle energy.
-
-Post-meal movement lowers insulin exposure. Cutting processed food does the same at the source. Muscle is the organ that clears glucose, so keeping it matters at every age. Sleep is when the repair happens, and short sleep raises the exact cardiovascular risk that insulin resistance has been quietly building. Even the honest supplements — magnesium, a sensible vitamin D dose — earn their place only by supporting that same machinery.
-
-The healthcare system is built to treat the crash at the end. It is not built to keep you off that road. That job is yours, and the biology gives you a decade-wide window to act — long before any test tells you to.
-
-Here's where to start, in order of leverage:
-
-- **Move for 10 minutes after your biggest meals.** A walk, squats during the ads, washing up — anything that keeps you off the chair while glucose is peaking.
-- **Cut the ultra-processed foods** that spike insulin hardest.
-- **Keep some muscle.** A few sets of bodyweight work daily is enough to hold the line.
-- **Protect sleep like it's medical.** Aim past six hours; get checked for sleep apnea if you snore and never feel rested.
-- **Supplement only to fix a real gap.** Vitamin D if a test says you're low (400–1,000 IU). Magnesium glycinate (200–400mg elemental) if poor sleep, stress, or migraines fit you. Skip the rest.
-
-None of it costs much. The most powerful lever on this list is a ten-minute walk you can take tonight — and the body you'll be living in ten years from now is being built by whether you take it.
+None of this shows up tomorrow. All of it is accruing tonight, at the cellular level, every time you choose to move instead of sit.
 
 ---
 
-**Sources & further reading**
+### Sources & further reading
 
-- Insulin resistance precedes diabetes by 10–15 years: [*Hyperinsulinemia and its pivotal role*](https://pubmed.ncbi.nlm.nih.gov/34360563/) · [StatPearls: Insulin Resistance](https://www.ncbi.nlm.nih.gov/books/NBK507839/)
-- Muscle contraction clears glucose without insulin (GLUT4): [Richter & Hargreaves, *Physiological Reviews*](https://journals.physiology.org/doi/full/10.1152/physrev.00038.2012)
-- Post-meal walking beats total-time and untimed walking: [DiPietro et al., *Diabetes Care*](https://diabetesjournals.org/care/article/36/10/3262/30770/Three-15-min-Bouts-of-Moderate-Postmeal-Walking) · [Reynolds et al. crossover trial](https://pubmed.ncbi.nlm.nih.gov/27747394/)
-- Vitamin D toxicity and safe limits: [*Vitamin D Toxicity — A Clinical Perspective*](https://pmc.ncbi.nlm.nih.gov/articles/PMC6158375/)
-- Magnesium for migraine and sleep: [Systematic review of RCTs](https://link.springer.com/article/10.1186/s41983-026-01150-z) · [Magnesium bisglycinate sleep RCT](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12412596/)
-- Short sleep and cardiovascular risk: [JAHA dose-response meta-analysis](https://www.ahajournals.org/doi/10.1161/JAHA.118.008552) · [Systematic review](https://pubmed.ncbi.nlm.nih.gov/29206050/)
-- Glycine, core temperature, and sleep: [Kawai et al.](https://www.sciencedirect.com/science/article/pii/S1347861319305729) · [Glycine and daytime performance](https://pmc.ncbi.nlm.nih.gov/articles/PMC3328957/)
+- Tabák, A.G., et al. (2009). [Trajectories of glycaemia, insulin sensitivity, and insulin secretion before diagnosis of type 2 diabetes: an analysis from the Whitehall II study](https://www.thelancet.com/journals/lancet/article/PIIS014067360960619X/fulltext). *The Lancet*, 373(9682), 2215–2221.
+- Richter, E.A., & Hargreaves, M. (2013). [Exercise, GLUT4, and Skeletal Muscle Glucose Uptake](https://journals.physiology.org/doi/full/10.1152/physrev.00038.2012). *Physiological Reviews*, 93(3), 993–1017.
+- Buffey, A.J., et al. (2022). [The Acute Effects of Interrupting Prolonged Sitting Time in Adults with Standing and Light-Intensity Walking on Biomarkers of Cardiometabolic Health](https://link.springer.com/article/10.1007/s40279-022-01808-7). *Sports Medicine*, 52(8), 1765–1787.
+- Li, R., et al. (2018). [Associations of Muscle Mass and Strength with All-Cause Mortality among US Older Adults](https://pmc.ncbi.nlm.nih.gov/articles/PMC5820209/). *Medicine & Science in Sports & Exercise*, 50(3), 458–467.
+- Rosendahl-Riise, H., et al. (2017). [Vitamin D supplementation and its influence on muscle strength and mobility in community-dwelling older persons: a systematic review and meta-analysis](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5248635/). *Journal of Human Nutrition and Dietetics*, 30(1), 3–15.
+- Marcinowska-Suchowierska, E., et al. (2020). [Vitamin D supplementation: upper limit for safety revisited?](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7897606/) *Aging Clinical and Experimental Research*.
+- Zhang, X., et al. (2016). [Effects of Magnesium Supplementation on Blood Pressure: A Meta-Analysis of Randomized Double-Blind Placebo-Controlled Trials](https://www.ahajournals.org/doi/10.1161/HYPERTENSIONAHA.125.25129). *Hypertension*, 68(2), 324–333.
+- Yamadera, W., et al. (2007). [Glycine ingestion improves subjective sleep quality in human volunteers, correlating with polysomnographic changes](https://onlinelibrary.wiley.com/doi/10.1111/j.1479-8425.2007.00262.x). *Sleep and Biological Rhythms*, 5(2), 126–131.
+- Cappuccio, F.P., et al. (2011). [Sleep duration predicts cardiovascular outcomes: a systematic review and meta-analysis of prospective studies](https://academic.oup.com/eurheartj/article/32/12/1484/502022). *European Heart Journal*, 32(12), 1484–1492.

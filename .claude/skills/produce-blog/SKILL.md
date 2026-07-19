@@ -66,12 +66,20 @@ The base rules are the Blog Post Generation Standards in `.claude/CLAUDE.md` (Se
 
 ### 5. Write the post
 
+The post always has a **three-part macro structure** — say what you're going to say, say it, then say what you said:
+
+1. **Executive view** — a high-level executive summary of the whole piece, placed at the very beginning of the blog, straight after the frontmatter. This is where you *say what you're going to say*: the thesis and the shape of the argument, compressed.
+2. **Main body** — the argument itself, in sections. This is where you *say it*.
+3. **Summary** — a closing recap section. This is where you *say what you have said*, and where the "so what" actions live.
+
+Within that frame:
+
 - **Length**: under 3,000 words. No minimum — a tight, well-sourced ~1,800-word piece beats a padded one. Say what the argument supports and stop.
-- **Lead** with the single most valuable or surprising insight (inverted pyramid).
+- **Lead** with the single most valuable or surprising insight (inverted pyramid) — the executive view opens with it.
 - **Headers**: frequent `###` section headers a skimmer can navigate by.
-- **Cite inline** as markdown links, and close the body with a **"Sources & further reading"** list.
+- **Cite inline** as markdown links, and close the body with a **"Sources & further reading"** list (after the summary section). **This list must include every reference you used** — every study, article, or page consulted during research that informed the piece, not just the ones cited inline. Nothing you relied on goes unlisted.
 - **End** each section with a sentence that pulls the reader into the next.
-- **Close** with the "so what": the concrete actions a reader should take.
+- **Close** with the "so what" inside the summary section: the concrete actions a reader should take.
 
 ### 6. Save the output
 
@@ -89,7 +97,15 @@ sources:
 ---
 
 # <Headline>
+
+<Executive view — say what you're going to say>
+
+### <Main body sections — say it>
 ...
+
+### <Summary — say what you have said, plus the "so what" actions>
+
+<Sources & further reading>
 ```
 
 When done, report: the thesis angle you argued, the key sources you researched and cited, the word count, and any rows that failed to resolve.
