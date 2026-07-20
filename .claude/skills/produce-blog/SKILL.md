@@ -83,7 +83,20 @@ Within that frame:
 
 ### 6. Save the output
 
-Write the post to `blog-factory/<csv-basename>-blog.md` (e.g. `Health.csv` → `Health-blog.md`). Re-running with the same manifest overwrites this file — that's intended.
+Write the post to `blog-factory/output/<MM-DD-YYYY>-<N>.md`, where the date and time come from the **system clock** (today's date), **not** from the CSV, the notes, or the watch date. Get it from `date`:
+
+```bash
+date +%m-%d-%Y   # e.g. 07-20-2026  (US order: month-day-year)
+```
+
+- `<MM-DD-YYYY>` is today's system date in **month-day-year** order (note: this is the opposite order from the Ark note filenames, which are day-month-year).
+- `<N>` is the next free sequence number for that date in `blog-factory/output/`, an integer in the range **0–90**. First blog produced today → `0`; if `07-20-2026-0.md` already exists, use `-1`, then `-2`, and so on. Check what's already there before choosing `N`:
+
+  ```bash
+  ls blog-factory/output/ | grep "^$(date +%m-%d-%Y)-"
+  ```
+
+Unlike the old `<csv-basename>-blog.md` scheme, this filename does **not** overwrite a previous run — each run of the same manifest gets a fresh, date-stamped, sequential filename. Create `blog-factory/output/` if it doesn't exist.
 
 Start the file with YAML frontmatter for traceability, then the post:
 
@@ -113,5 +126,5 @@ When done, report: the thesis angle you argued, the key sources you researched a
 To count body words (excluding frontmatter), don't strip the frontmatter with two sed `---` passes — line 1 *is* `---`, so that silently yields 0. And don't use `c==2{print}` — any `---` horizontal rule in the body (e.g. the divider before "Sources & further reading") bumps the counter past 2 and silently truncates the count there. Use:
 
 ```bash
-awk 'c>=2{print} /^---$/{c++}' blog-factory/<csv-basename>-blog.md | wc -w
+awk 'c>=2{print} /^---$/{c++}' blog-factory/output/<MM-DD-YYYY>-<N>.md | wc -w
 ```
