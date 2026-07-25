@@ -74,6 +74,7 @@ The post always has a **three-part macro structure** — say what you're going t
 
 Within that frame:
 
+- **Title**: eye-catching, short, and goes right to the blog's main point — no throat-clearing or generic phrasing ("A Look at…", "Everything You Need to Know About…"). It should read like the thesis compressed into one line, not a topic label.
 - **Length**: under 3,000 words. No minimum — a tight, well-sourced ~1,800-word piece beats a padded one. Say what the argument supports and stop.
 - **Lead** with the single most valuable or surprising insight (inverted pyramid) — the executive view opens with it.
 - **Headers**: frequent `###` section headers a skimmer can navigate by.
@@ -83,22 +84,25 @@ Within that frame:
 
 ### 6. Save the output
 
-Write the post to `blog-factory/output/<MM-DD-YYYY>-<N>.md`, where the date and time come from the **system clock** (today's date), **not** from the CSV, the notes, or the watch date. Get it from `date`:
+Each post gets its own subfolder inside `blog-factory/output/`, named after the **blog's title** (not the CSV name, not a date), holding a single `index.md`:
 
-```bash
-date +%m-%d-%Y   # e.g. 07-20-2026  (US order: month-day-year)
+```
+blog-factory/output/<title-slug>/index.md
 ```
 
-- `<MM-DD-YYYY>` is today's system date in **month-day-year** order (note: this is the opposite order from the Ark note filenames, which are day-month-year).
-- `<N>` is the next free sequence number for that date in `blog-factory/output/`, an integer in the range **0–90**. First blog produced today → `0`; if `07-20-2026-0.md` already exists, use `-1`, then `-2`, and so on. Check what's already there before choosing `N`:
+Derive `<title-slug>` from the title you wrote in step 5: lowercase it, replace spaces with hyphens, strip punctuation (quotes, colons, apostrophes, periods, question marks), and collapse repeated hyphens. E.g. title `Discipline Isn't a Muscle. It's an Identity.` → slug `discipline-isnt-a-muscle-its-an-identity`.
 
-  ```bash
-  ls blog-factory/output/ | grep "^$(date +%m-%d-%Y)-"
-  ```
+```bash
+mkdir -p "blog-factory/output/<title-slug>"
+```
 
-Unlike the old `<csv-basename>-blog.md` scheme, this filename does **not** overwrite a previous run — each run of the same manifest gets a fresh, date-stamped, sequential filename. Create `blog-factory/output/` if it doesn't exist.
+If that folder already exists (e.g. a prior run produced the same or a very similar title), don't overwrite it — append `-2`, `-3`, etc. to the slug until you find a free folder name. Check first:
 
-Start the file with YAML frontmatter for traceability, then the post:
+```bash
+ls blog-factory/output/ | grep "^<title-slug>"
+```
+
+Start `index.md` with YAML frontmatter for traceability, then the post:
 
 ```markdown
 ---
@@ -121,10 +125,12 @@ sources:
 <Sources & further reading>
 ```
 
+`date` still records **today's system date** (`date +%Y-%m-%d`), not the CSV, notes, or watch date — it's just no longer part of the path.
+
 When done, report: the thesis angle you argued, the key sources you researched and cited, the word count, and any rows that failed to resolve.
 
 To count body words (excluding frontmatter), don't strip the frontmatter with two sed `---` passes — line 1 *is* `---`, so that silently yields 0. And don't use `c==2{print}` — any `---` horizontal rule in the body (e.g. the divider before "Sources & further reading") bumps the counter past 2 and silently truncates the count there. Use:
 
 ```bash
-awk 'c>=2{print} /^---$/{c++}' blog-factory/output/<MM-DD-YYYY>-<N>.md | wc -w
+awk 'c>=2{print} /^---$/{c++}' "blog-factory/output/<title-slug>/index.md" | wc -w
 ```
