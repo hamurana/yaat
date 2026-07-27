@@ -4,20 +4,20 @@
     "type": "split",
     "children": [
       {
-        "id": "d6f4f4a551a8eba1",
+        "id": "51af35fdb8bdf105",
         "type": "tabs",
         "children": [
           {
-            "id": "5ecdf8824ef1c9f3",
+            "id": "dd452ed7a6c48d3f",
             "type": "leaf",
             "state": {
               "type": "bases",
               "state": {
-                "file": "Blog/filter.base",
-                "viewName": "Habit"
+                "file": "Blog/blog-05-2026.base",
+                "viewName": "Health"
               },
               "icon": "lucide-table",
-              "title": "filter"
+              "title": "blog-05-2026"
             }
           }
         ]
@@ -183,45 +183,47 @@
       "bases:Create new base": false
     }
   },
-  "active": "5ecdf8824ef1c9f3",
+  "active": "dd452ed7a6c48d3f",
   "lastOpenFiles": [
-    "Learning/07/10-07-2026-3.md",
-    "Misc/Thnmbnails/4zCSHi24Esw.jpg",
-    "Learning/07/10-07-2026-2.md",
-    "Misc/Thnmbnails/P2r7WHPniaI.jpg",
-    "Learning/07/10-07-2026-1.md",
-    "Misc/Thnmbnails/3db5MyGIUBE.jpg",
-    "Learning/05/14-05-2026-2.md",
-    "Learning/05/15-05-2026-5.md",
-    "Learning/07/01-07-2026-7.md",
-    "Learning/05/15-05-2026-4.md",
-    "Learning/07/01-07-2026-4.md",
-    "Blog/filter.base",
-    "2026-07-03.md",
-    "Invalid date.md",
-    "Untitled.canvas",
-    "Learning/07/01-07-2026-1.md",
-    "Learning/07/01-07-2026-2.md",
-    "Learning/05/12-05-2026-3.md",
+    "Blog/blog-08-2026.base",
+    "Blog/blog-07-2026.base",
+    "Blog/blog-05-2026.base",
+    "Blog/blog-06-2026.base",
+    "Learning/06/30-06-2026-6.md",
+    "Learning/06/30-06-2026-7.md",
+    "Learning/06/21-06-2026-2.md",
+    "Learning/06/19-06-2026-9.md",
+    "Learning/06/19-06-2026-8.md",
+    "Learning/06/19-06-2026-7.md",
+    "Learning/06/19-06-2026-5.md",
+    "Learning/06/19-06-2026-6.md",
+    "Learning/06/19-06-2026-2.md",
+    "Learning/06/15-06-2026-2.md",
+    "Learning/06/15-06-2026-3.md",
+    "Learning/06/14-06-2026-4.md",
+    "Learning/06/14-06-2026-3.md",
+    "Learning/06/14-06-2026-2.md",
+    "Learning/06/14-06-2026-1.md",
+    "Learning/06/10-06-2026-2.md",
+    "Learning/06/10-06-2026-1.md",
+    "Learning/05/12-05-2026-2.md",
     "Learning/05/12-05-2026-1.md",
     "Learning/05/11-05-2026-1.md",
-    "Learning/06/29-06-2026-13.md",
-    "Learning/06/24-06-2026-7.md",
-    "Learning/07/02-07-2026-1.md",
+    "Learning/05/17-05-2026-3.md",
+    "Learning/05/17-05-2026-2.md",
+    "Learning/05/17-05-2026-1.md",
+    "Learning/05/15-05-2026-6.md",
+    "Learning/05/15-05-2026-3.md",
+    "Misc/Thnmbnails/4zCSHi24Esw.jpg",
+    "Misc/Thnmbnails/P2r7WHPniaI.jpg",
+    "Misc/Thnmbnails/3db5MyGIUBE.jpg",
+    "Untitled.canvas",
     "Podcast/publish",
     "Podcast/draft",
     "Blog/publish",
     "Blog/draft",
-    "Learning/06/29-06-2026-27.md",
     "Blog",
     "Podcast",
-    "Learning/05/17-05-2026-1.md",
-    "Learning/05/15-05-2026-6.md",
-    "Learning/06/29-06-2026-1.md",
-    "Learning/06/29-06-2026-4.md",
-    "Learning/06/28-06-2026-2.md",
-    "Learning/06/29-06-2026-15.md",
-    "Learning/06/29-06-2026-14.md",
     "Misc/Thnmbnails/UH1NO4iiaoE.jpg",
     "Misc/Thnmbnails/BARmrmn-NfQ.jpg",
     "Misc/Thnmbnails/HzRcJsuzyBU.jpg",
@@ -229,8 +231,6 @@
     "Misc/Thnmbnails/saLGnGU1suE.jpg",
     "Misc/Thnmbnails/YPnKKuWzR0Y.jpg",
     "Misc/Thnmbnails/T1-MJLh8UvA.jpg",
-    "Misc/Thnmbnails",
-    "Misc",
-    "Learning/06"
+    "Misc/Thnmbnails"
   ]
 }

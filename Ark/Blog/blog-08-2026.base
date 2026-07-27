@@ -1,0 +1,61 @@
+views:
+  - type: table
+    name: Health
+    filters:
+      and:
+        - note["watch date"] >= "2026-08-01"
+        - note["watch date"] <= "2026-08-30"
+        - topic == "Health"
+    order:
+      - file.name
+      - topic
+      - title
+    columnSize:
+      file.name: 125
+      note.topic: 138
+  - type: table
+    name: Charisma
+    filters:
+      and:
+        - note["watch date"] <= "2026-08-30"
+        - note["watch date"] >= "2026-08-01"
+        - topic == "Charisma"
+    order:
+      - file.name
+      - topic
+      - title
+    columnSize:
+      note.topic: 138
+  - type: table
+    name: Habit
+    filters:
+      and:
+        - note["watch date"] <= "2026-08-30"
+        - note["watch date"] >= "2026-08-01"
+        - topic == "Habit"
+    order:
+      - file.name
+      - topic
+      - title
+  - type: table
+    name: Investment
+    filters:
+      and:
+        - note["watch date"] <= "2026-08-30"
+        - note["watch date"] >= "2026-08-01"
+        - topic == ["Investment"]
+    order:
+      - file.name
+      - topic
+      - title
+  - type: table
+    name: Style
+    filters:
+      and:
+        - note["watch date"] <= "2026-08-30"
+        - note["watch date"] >= "2026-08-01"
+        - topic == "Style"
+    order:
+      - file.name
+      - topic
+      - title
