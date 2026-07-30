@@ -1,136 +1,46 @@
 ---
 name: produce-blog
-description: Turn a CSV manifest in blog-factory/ into one synthesized blog post drawn from the referenced Ark knowledge-base notes. Use whenever the user says "produce a blog", "make a blog from the csv", "run the blog factory", "write a blog from these notes", or points at a .csv in blog-factory/ — even if they don't say "blog post" explicitly. Also use when the user asks to repurpose Ark Learning notes into a publishable article.
+description: Turn a CSV manifest in blog-factory/ into one synthesized blog post drawn from the referenced Ark knowledge-base notes, written according to a named blog profile. Invoke as "/produce-blog <profile> <csv>", e.g. "/produce-blog s1 health-batch.csv". Use whenever the user says "produce a blog", "make a blog from the csv", "run the blog factory", "write a blog from these notes", or points at a .csv in blog-factory/ — even if they don't say "blog post" explicitly, or name a profile like "s1". Also use when the user asks to repurpose Ark Learning notes into a publishable article.
 ---
 
 # Produce Blog
 
-Write one original, authoritative blog post whose *ideas* come from a batch of Ark Learning notes listed in a CSV manifest. The manifest curates which notes seed the piece; your job is to digest their views and argue them in your own voice — not to recap, critique, or retell the source videos.
+Write one original, authoritative blog post whose *ideas* come from a batch of Ark Learning notes listed in a CSV manifest, produced according to a named **blog profile** that defines the style, stance, and requirements to write to.
 
-## The core stance (read this first — it's the mistake to avoid)
+## Invocation
 
-The blog is **your own piece built on the digested views**, not a summary of what the creators said. Digest every note, condense them to a **core thesis**, then make that argument yourself and support it with your **own independent research**.
+This skill takes two required positional parameters: `/produce-blog <profile> <csv>`.
 
-- **Strip all narration of the sources.** No "Dr. Alex says…", "the video claims…", "the creator argues…". The creators are the *seed* of the idea, not the *subject* of the writing. If a sentence's job is to report what a video said, cut or rewrite it.
-- **Do your own research.** Use `WebSearch`/`WebFetch` to find real studies, data, and examples that back the thesis, and cite them inline as markdown links, with a "Sources & further reading" list at the end. Prefer primary/authoritative sources (journals, PubMed/PMC, recognised bodies).
-- **This overrides the vault's "no outside claims" rule.** That rule governs Ark notes, not blogs. Here, importing well-sourced external material is the whole point. Where your research refines a figure from the notes, trust the researched figure (e.g. notes said glycine "~10g"; trials use 3g → write 3g).
+- `<profile>` — the name of a blog profile, e.g. `s1`. A profile is a file at `.claude/skills/produce-blog/profiles/<profile>.md` that defines *how* the post gets written: stance, research approach, register, structure, precision rules, output naming, and sign-off.
+- `<csv>` — the name of the CSV manifest in `blog-factory/`, e.g. `health-batch.csv` (the `.csv` extension may be omitted).
 
-## Inputs
+**Both parameters are required — do not guess either on the user's behalf.** If the user's request doesn't specify both (e.g. they just say "produce a blog" or point at a CSV without naming a profile), stop and report the missing parameter(s), then ask them to re-invoke with both, for example:
 
-1. **The manifest**: a `.csv` in `blog-factory/` with header `name,topic,title`.
-   - `name` — an Ark note basename in `DD-MM-YYYY-N` form.
-   - `topic` — the Ark category (Health, Investment, Style, …).
-   - `title` — the original video title (context only; the notes are the source of truth).
-   - If the user didn't name a CSV and `blog-factory/` holds more than one, ask which to use.
-2. **The notes**: each `name` resolves to `Ark/Learning/<MM>/<name>.md`, where `<MM>` is the month segment of the `DD-MM-YYYY` date (e.g. `12-05-2026-5` → `Ark/Learning/05/12-05-2026-5.md`).
+> `/produce-blog s1 health-batch.csv`
 
-Resolve every row before writing anything. If a note is missing, report the gap and continue with what exists — never invent content for a missing row.
+Do not fall back to a default profile and do not proceed with only one parameter resolved.
 
-## Workflow
+## Resolving the profile
 
-### 1. Read everything first
+Look for `.claude/skills/produce-blog/profiles/<profile>.md`.
 
-Read all referenced notes in full and absorb the substance. Only after absorbing the whole set, find the **thesis angle**: the claim or tension that connects the notes — one no single video states outright but the batch collectively points to. This becomes *your* argument. Don't default to "N tips from N videos", and don't organise the post around the videos as objects.
+- If it exists, read it in full. It is the authority on the rest of the workflow — follow its instructions to write and save the post.
+- If it doesn't exist, list the profiles actually present in `.claude/skills/produce-blog/profiles/` and ask the user which they meant. Don't silently substitute a different profile.
 
-The formula that has worked on every run so far: **name the single upstream variable the whole batch shares, then argue that every technique in the notes is downstream of it.** Worked examples:
-- *Health*: insulin resistance is the silent throughline — cheap daily movement beats the supplement economy.
-- *Charisma*: charisma isn't performance, it's the absence of need ("want it, don't need it") — humor, small talk, listening, and gravitas techniques are all symptoms of that one state.
-- *Habit*: discipline isn't willpower, it's identity backed by evidence — every technique is a production method for proof that you keep promises to yourself.
+### Available profiles
 
-**When the batch disagrees internally, that tension IS the angle.** The Habit batch mixed "stop negotiating with yourself" grind talks with identity/mindset videos — the accepted piece treated the grind framing as the folk model the research complicates, and let that disagreement drive the argument. Don't paper over an internal conflict; build on it.
+- **s1** (`profiles/s1.md`) — the original blog-factory behavior: own-the-ideas stance, independent research, three-part macro structure, topic-matched register, 3,000-word cap. The full-rigor baseline (100%).
+- **s2** (`profiles/s2.md`) — a lighter, faster-turnaround profile at roughly 75% of s1's research depth and formal polish: same own-the-ideas stance and three-part structure, but research scoped to only the 2–4 headline claims, more forgiving sourcing standards, a more conversational register, and a shorter 1,200–1,800 word target.
+- **s3** (`profiles/s3.md`) — a minimal, low-key profile at roughly 50% of s1's scale: no independent research at all (notes only), softspoken tone, bullet-heavy, everyday vocabulary, no macro-structure requirement, under 800 words.
 
-### 2. Research the thesis independently
+## Resolving the CSV
 
-Before writing, back the argument with your own material. Run `WebSearch`/`WebFetch` for real studies, data, and examples that support (or usefully complicate) the core claims — especially any specific mechanism, dose, or statistic you're going to assert. Prefer primary/authoritative sources (journals, PubMed/PMC, recognised bodies). Collect the URLs; you'll cite them inline and list them at the end. Where research refines a figure from the notes, use the researched figure.
+- The manifest is a `.csv` in `blog-factory/` with header `name,topic,title`.
+  - `name` — an Ark note basename in `DD-MM-YYYY-N` form.
+  - `topic` — the Ark category (Health, Investment, Style, …).
+  - `title` — the original video title (context only; the notes are the source of truth).
+- Resolve `<csv>` to `blog-factory/<csv>`, appending `.csv` if the user omitted it. If that file doesn't exist, report the miss (and, if helpful, list the `.csv` files actually present in `blog-factory/`) and stop — don't guess which manifest was meant.
+- Each row's `name` resolves to `Ark/Learning/<MM>/<name>.md`, where `<MM>` is the month segment of the `DD-MM-YYYY` date (e.g. `12-05-2026-5` → `Ark/Learning/05/12-05-2026-5.md`).
+- Resolve every row before writing anything. If a note is missing, report the gap and continue with what exists — never invent content for a missing row.
 
-The efficient shape of this step: **list the core claims the argument leans on, then run one targeted search per claim — ~6–8 searches total, issued in parallel batches of 2–3.** Aim each search at the **canonical named study** behind the technique, not a generic topic query (e.g. spotlight effect → Gilovich 2000; question-asking → Huang 2017; deep questions → Aron 1997's 36-questions study; listening → Itzchakov & Kluger; humor → McGraw & Warren's benign violation theory; vocal pitch → Klofstad 2012). Cite the journal/PDF link when reachable; a reputable secondary summary (e.g. BPS Research Digest) is acceptable when the paper is paywalled. Give each "Sources & further reading" entry authors + year + journal.
-
-**Failed replications are content, not obstacles.** Searching for a canonical study often surfaces its famous null (ego depletion → Hagger et al. 2016's 23-lab replication; Bryan 2011 "being a voter" → Gerber et al. 2016 field null). Cite both and hedge honestly — the conflict strengthens the piece's authority rather than weakening the claim.
-
-### 3. Match the writing style to the topic
-
-The base rules are the Blog Post Generation Standards in `.claude/CLAUDE.md` (Section 2) — banned AI-fluff words, skimmer formatting, inverted pyramid, transition sentences. Write in your own authoritative voice; no narration of the sources. Layer topic-specific judgment on top:
-
-- **Health / medical** — evidence-first. State mechanisms, doses, and statistics exactly, as researched fact with a citation, and keep honest hedges and safety caveats ("modest, consistent effect", "check with a doctor", kidney-disease exceptions).
-- **Investment / Business** — numbers and frameworks carry the piece. Name companies, figures, and framework names verbatim; flag speculation as opinion.
-- **Style / Charisma / self-improvement** — more personal, second-person, example-driven. Keep specific product/garment/technique names. Confirmed shape from the Charisma run: research citations woven into an opinionated argument (not an evidence review), and the closing "so what" written as a **numbered drill list** of small concrete reps ("give someone 10 minutes of full attention", "swap one *what* for one *why* per conversation") — one drill per section, mapping back to the argument.
-- Anything else: infer the register from the subject matter.
-
-### 4. Precision rules
-
-- Keep every statistic, tool, book, brand, dose, and framework name specific — "magnesium glycinate, 200–400mg elemental", never "a magnesium supplement".
-- A factual claim (statistic, dose, study result) needs a real cited source. Illustrative analogies and everyday scenarios don't — use them freely for clarity.
-- Genuine conflicts in the evidence are content, not problems — surface them.
-- Leaving a source's minor points out is fine; distorting the ones you keep is not.
-- **Banned words stay banned even when a note uses one legitimately.** A note's "carrot and stick *leverage*" is a real concept, but "leverage" is on the Section-2 ban list — substitute a precise alternative ("options", "walk-away power", "bargaining position") rather than importing the banned word.
-
-### 5. Write the post
-
-The post always has a **three-part macro structure** — say what you're going to say, say it, then say what you said:
-
-1. **Executive view** — a high-level executive summary of the whole piece, placed at the very beginning of the blog, straight after the frontmatter. This is where you *say what you're going to say*: the thesis and the shape of the argument, compressed.
-2. **Main body** — the argument itself, in sections. This is where you *say it*.
-3. **Summary** — a closing recap section. This is where you *say what you have said*, and where the "so what" actions live.
-
-Within that frame:
-
-- **Title**: eye-catching, short, and goes right to the blog's main point — no throat-clearing or generic phrasing ("A Look at…", "Everything You Need to Know About…"). It should read like the thesis compressed into one line, not a topic label.
-- **Length**: under 3,000 words. No minimum — a tight, well-sourced ~1,800-word piece beats a padded one. Say what the argument supports and stop.
-- **Lead** with the single most valuable or surprising insight (inverted pyramid) — the executive view opens with it.
-- **Headers**: frequent `###` section headers a skimmer can navigate by.
-- **Cite inline** as markdown links, and close the body with a **"Sources & further reading"** list (after the summary section). **This list must include every reference you used** — every study, article, or page consulted during research that informed the piece, not just the ones cited inline. Nothing you relied on goes unlisted.
-- **End** each section with a sentence that pulls the reader into the next.
-- **Close** with the "so what" inside the summary section: the concrete actions a reader should take.
-
-### 6. Save the output
-
-Each post gets its own subfolder inside `blog-factory/output/`, named after the **blog's title** (not the CSV name, not a date), holding a single `index.md`:
-
-```
-blog-factory/output/<title-slug>/index.md
-```
-
-Derive `<title-slug>` from the title you wrote in step 5: lowercase it, replace spaces with hyphens, strip punctuation (quotes, colons, apostrophes, periods, question marks), and collapse repeated hyphens. E.g. title `Discipline Isn't a Muscle. It's an Identity.` → slug `discipline-isnt-a-muscle-its-an-identity`.
-
-```bash
-mkdir -p "blog-factory/output/<title-slug>"
-```
-
-If that folder already exists (e.g. a prior run produced the same or a very similar title), don't overwrite it — append `-2`, `-3`, etc. to the slug until you find a free folder name. Check first:
-
-```bash
-ls blog-factory/output/ | grep "^<title-slug>"
-```
-
-Start `index.md` with YAML frontmatter for traceability, then the post:
-
-```markdown
----
-title: <the blog's own headline>
-topic: <topic from the CSV>
-date: <today, YYYY-MM-DD>
-sources:
-  - <name from CSV> — <origin link from the note>
----
-
-# <Headline>
-
-<Executive view — say what you're going to say>
-
-### <Main body sections — say it>
-...
-
-### <Summary — say what you have said, plus the "so what" actions>
-
-<Sources & further reading>
-```
-
-`date` still records **today's system date** (`date +%Y-%m-%d`), not the CSV, notes, or watch date — it's just no longer part of the path.
-
-When done, report: the thesis angle you argued, the key sources you researched and cited, the word count, and any rows that failed to resolve.
-
-To count body words (excluding frontmatter), don't strip the frontmatter with two sed `---` passes — line 1 *is* `---`, so that silently yields 0. And don't use `c==2{print}` — any `---` horizontal rule in the body (e.g. the divider before "Sources & further reading") bumps the counter past 2 and silently truncates the count there. Use:
-
-```bash
-awk 'c>=2{print} /^---$/{c++}' "blog-factory/output/<title-slug>/index.md" | wc -w
-```
+Once the profile is loaded and the CSV rows are resolved to notes, follow the loaded profile's instructions for the rest of the task (reading the notes, finding the thesis, researching, writing, and saving the output).
