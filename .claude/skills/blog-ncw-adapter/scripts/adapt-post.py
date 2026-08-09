@@ -14,12 +14,16 @@ script, in place:
      call made by whoever invokes this script (read the full post, decide up
      to 5 representative tags) — this script only performs the mechanical
      frontmatter insertion.
+  5. Adds `draft: true` to the frontmatter, so an adapted post lands unpublished
+     and has to be promoted deliberately.
 
-Each of the four steps is independently idempotent: already-present pieces
+Each of the five steps is independently idempotent: already-present pieces
 (an existing description:, an existing {{< lead >}} wrap, an existing tags:
-field, an absent sources: block) are left untouched and reported as such, so
-the script is safe to re-run and safe to use to backfill just one missing
-piece (e.g. add tags: to a post already adapted before this field existed).
+field, an existing draft: value, an absent sources: block) are left untouched
+and reported as such, so the script is safe to re-run and safe to use to
+backfill just one missing piece (e.g. add tags: to a post already adapted
+before this field existed). Note that an existing `draft: false` is therefore
+preserved — re-running never un-publishes a post you have already promoted.
 
 Usage:
   python3 adapt-post.py <slug|folder|path/to/index.md> [--tags "Tag One, Tag Two, Tag Three"]
@@ -213,6 +217,12 @@ def main():
             report.append(f"tags: added ({', '.join(tags)})")
     else:
         report.append("tags: not provided, skipped")
+
+    if has_key(front_lines, "draft"):
+        report.append("draft: already present")
+    else:
+        front_lines.append("draft: true\n")
+        report.append("draft: added (true)")
 
     new_text = "---\n" + "".join(front_lines) + "---\n" + "".join(new_body)
 

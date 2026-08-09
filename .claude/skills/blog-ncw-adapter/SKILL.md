@@ -1,6 +1,6 @@
 ---
 name: blog-ncw-adapter
-description: Adapt one already-produced blog-factory post (output of the produce-blog skill) for NCW publishing — strip the sources field from its frontmatter, add a description field populated from the post's first paragraph, wrap that same first paragraph in the body with {{< lead >}} tags, and add a judgment-based tags field (up to 5 tags) summarizing the post's main points. Invoke as "/blog-ncw-adapter <slug|path>", e.g. "/blog-ncw-adapter less-clothes-more-elegant". Use whenever the user says "adapt this blog for NCW", "run the ncw adapter", "prep this post for publishing", "tag this post", or points at a post under blog-factory/output/ for this transform.
+description: Adapt one already-produced blog-factory post (output of the produce-blog skill) for NCW publishing — strip the sources field from its frontmatter, add a description field populated from the post's first paragraph, wrap that same first paragraph in the body with {{< lead >}} tags, add a judgment-based tags field (up to 5 tags) summarizing the post's main points, and set draft to true so the post lands unpublished. Invoke as "/blog-ncw-adapter <slug|path>", e.g. "/blog-ncw-adapter less-clothes-more-elegant". Use whenever the user says "adapt this blog for NCW", "run the ncw adapter", "prep this post for publishing", "tag this post", or points at a post under blog-factory/output/ for this transform.
 ---
 
 # Blog NCW Adapter
@@ -69,18 +69,27 @@ For the resolved `index.md`, the script:
    {{< /lead >}}
    ```
 5. **Adds `tags:`** to the frontmatter as a YAML list, from the `--tags` values.
+6. **Adds `draft: true`** to the frontmatter (an unquoted YAML boolean), so an
+   adapted post always lands unpublished and has to be promoted deliberately.
+   An existing `draft:` value of either kind is left alone — see Idempotency.
 
 The file is edited in place — no new file or folder is created, and the rest
 of the body is untouched.
 
 ## Idempotency
 
-Each of the four fields above is checked and applied independently, so the
+Each of the five fields above is checked and applied independently, so the
 script is safe to re-run and safe to use for backfilling just one missing
 piece — e.g. running it with `--tags` on a post that was already adapted
 before tagging existed only adds the `tags:` field and leaves
 `sources`/`description`/the lead wrap untouched. If every field is already in
 place, it reports "already fully adapted" and makes no changes.
+
+**`draft:` is presence-checked, not value-checked.** Once a post carries a
+`draft:` line the script never rewrites it, so promoting a post by hand to
+`draft: false` survives any number of re-runs — the adapter will not
+un-publish something you have already published. To force a post back to
+draft, delete its `draft:` line and re-run (or just edit the value directly).
 
 ## Reporting
 
