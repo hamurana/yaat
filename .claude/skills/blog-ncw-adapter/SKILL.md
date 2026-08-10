@@ -1,6 +1,6 @@
 ---
 name: blog-ncw-adapter
-description: Adapt one already-produced blog-factory post (output of the produce-blog skill) for NCW publishing — strip the sources field from its frontmatter, add a description field populated from the post's first paragraph, wrap that same first paragraph in the body with {{< lead >}} tags, add a judgment-based tags field (up to 5 tags) summarizing the post's main points, and set draft to true so the post lands unpublished. Invoke as "/blog-ncw-adapter <slug|path>", e.g. "/blog-ncw-adapter less-clothes-more-elegant". Use whenever the user says "adapt this blog for NCW", "run the ncw adapter", "prep this post for publishing", "tag this post", or points at a post under blog-factory/output/ for this transform.
+description: Adapt already-produced blog-factory posts (output of the produce-blog skill) for NCW publishing — strip the sources field from the frontmatter, add a description populated from the post's first paragraph, wrap that same paragraph in the body with {{< lead >}} tags, add a judgment-based tags field (up to 5 representative tags), set a publication date drawn from January–May of the current year with weekday frequency decreasing Monday to Sunday, and set draft to false so the post lands published. Accepts a single post OR a folder, in which case every post inside it is adapted. Invoke as "/blog-ncw-adapter <slug|folder|path>", e.g. "/blog-ncw-adapter less-clothes-more-elegant" or "/blog-ncw-adapter output". Use whenever the user says "adapt this blog for NCW", "run the ncw adapter", "prep this post for publishing", "tag this post", or points at a post or folder under blog-factory/output/ for this transform.
 ---
 
 # Blog NCW Adapter
@@ -12,45 +12,86 @@ manifests, and it does not write new content beyond the tags it judges.
 
 ## Invocation
 
-`/blog-ncw-adapter <slug|path>` — one required parameter identifying the post:
+`/blog-ncw-adapter <slug|folder|path>` — one required parameter identifying
+what to adapt:
 
 - a bare slug, e.g. `less-clothes-more-elegant` (resolves to
   `blog-factory/output/less-clothes-more-elegant/index.md`)
-- a folder path (resolves to `<folder>/index.md`)
+- a post folder — one that directly contains an `index.md`
 - a direct path to an `index.md`
+- **a folder of posts** — a directory whose *subdirectories* contain
+  `index.md` files. The command then applies to **every post inside it**.
+  `/blog-ncw-adapter output` adapts all posts in `blog-factory/output/`.
 
-If the parameter is missing, ask for it rather than guessing which post was meant.
+If the parameter is missing, ask for it — unless every unadapted post is the
+only thing present, in which case "adapt everything" and "adapt what needs it"
+resolve to the same file set and you can just proceed, saying why.
 
-## Step 1 — read and understand the post
+## Step 1 — read and understand each post completely
 
-Before touching anything, **read the full body** of the resolved `index.md` —
-not just the first paragraph. You need to actually understand what the post
-argues and its main points, because the next step depends on that
-understanding.
+Before touching anything, **read the full body** of every post you're about to
+adapt — not just the first paragraph, and not a skim. You need to understand:
+
+- **What it actually argues**, including the thesis it leads with.
+- **Its context** — the topic it sits under, the batch it came from, and what
+  its source material was about. A post's Ark note and origin video are fair
+  context to consider even though the adapter never modifies them.
+- **Where it pushes back.** Many posts add a caveat, correction, or objection
+  to their source. That is frequently the most distinctive thing in the piece.
+- **What sits near it.** If sibling posts cover adjacent ground, know that
+  before tagging, so the tag sets don't collide.
+
+This step is the whole job. The script is mechanical; the reading is not.
 
 ## Step 2 — choose tags (your judgment, not the script's)
 
-Decide **up to 5 tags** that are genuinely representative of the post's
-content and main points — not generic filler (avoid vague tags like "Life" or
-"Tips"; prefer specific ones tied to the actual subject and argument, e.g.
-"Insulin Resistance", "Decision Fatigue", "Discipline" over "Health",
-"Advice", "Mindset"). Fewer, sharper tags beat padding out to 5. This is a
-judgment call you make from having read the post in Step 1 — the helper
-script has no opinion on tag content, it only inserts whatever you give it.
+Decide **up to 5 tags that genuinely represent the post** — what it argues,
+not merely what it is about.
+
+- **Prefer the specific mechanism over the category.** `Sequence of Returns
+  Risk` over "Retirement". `Enclothed Cognition` over "Style". `Theory of
+  Constraints` over "Productivity".
+- **Reject the generic tier outright** — "Life", "Tips", "Advice", "Mindset",
+  "Health", "Money" are filler and carry no information.
+- **A tag may name the post's pushback** rather than its subject. Where the
+  best section is the caveat the post adds, tag that: `Conversational Ethics`,
+  `Morally Neutral Charisma`, `Climate Constraint`.
+- **Fewer, sharper tags beat padding to five.** Four precise tags is a better
+  outcome than four precise tags plus one vague one.
+- **Give adjacent posts divergent tags.** Posts built on the same source, or
+  covering neighbouring ground, must not end up with identical sets — they
+  would surface as near-duplicates in a tag index. Split them on each post's
+  actual emphasis.
+- **Every tag must be defensible from the text.** If you could not point at
+  the paragraph that earns it, it is the wrong tag.
+
+The helper script has no opinion on tag content — it inserts whatever you give
+it. Bad tags are therefore entirely a failure of Step 1.
 
 ## Step 3 — run the helper script
 
 The script does the rest of the transform mechanically and in place:
 
+**Single post:**
+
 ```bash
 python3 .claude/skills/blog-ncw-adapter/scripts/adapt-post.py "<slug|path>" --tags "Tag One, Tag Two, Tag Three"
 ```
 
-`--tags` is a comma-separated list of the tags chosen in Step 2 (max 5 — the
-script errors out if you pass more). Omit `--tags` only if you're deliberately
-backfilling some other field on a post you're not tagging right now.
+**Folder of posts** — tags are per-post, so `--tags` is *rejected* here (it
+would stamp the same tags on everything). Pass a TSV of `slug<TAB>tags`:
 
-For the resolved `index.md`, the script:
+```bash
+python3 .claude/skills/blog-ncw-adapter/scripts/adapt-post.py "<folder>" --tags-file tags.tsv
+```
+
+Without `--tags-file`, folder mode still applies every other field and then
+lists which posts still need tagging, so nothing is silently left untagged.
+
+Other flags: `--seed N` makes the date draw reproducible; `--force-date` and
+`--force-draft` overwrite values the script would otherwise preserve.
+
+For each resolved `index.md`, the script:
 
 1. **Removes the `sources:` block** from the frontmatter entirely (handles both
    the `- name: ... / origin: ...` structured form and the older flat
@@ -68,22 +109,49 @@ For the resolved `index.md`, the script:
    <paragraph text>
    {{< /lead >}}
    ```
-5. **Adds `tags:`** to the frontmatter as a YAML list, from the `--tags` values.
-6. **Adds `draft: true`** to the frontmatter (an unquoted YAML boolean), so an
-   adapted post always lands unpublished and has to be promoted deliberately.
-   An existing `draft:` value of either kind is left alone — see Idempotency.
+5. **Adds `tags:`** to the frontmatter as a YAML list, from the supplied values.
+6. **Sets `date:`** to a date in **January–May of the current year**, weighted
+   so weekday frequency decreases Monday → Sunday (see below).
+7. **Sets `draft: false`** (an unquoted YAML boolean), so an adapted post lands
+   published. An existing `draft:` of either value is left alone — see
+   Idempotency.
 
 The file is edited in place — no new file or folder is created, and the rest
 of the body is untouched.
 
+## The date distribution
+
+Dates come from 1 January to 31 May of the current year, with weekday weights
+7,6,5,4,3,2,1 for Monday through Sunday.
+
+**Folder mode allocates weekday counts deterministically across the batch**
+(largest-remainder), so the Monday→Sunday decrease is *guaranteed* in the
+result rather than merely likely, and dates are distinct where the pool
+allows. **Single-post mode draws one weighted-random date** — with n=1 no
+distribution can be guaranteed, and adapting a batch one post at a time will
+approximate the shape but can invert in the tail. Prefer folder mode for
+batches; the script prints the resulting spread and whether it is
+non-increasing.
+
 ## Idempotency
 
-Each of the five fields above is checked and applied independently, so the
-script is safe to re-run and safe to use for backfilling just one missing
-piece — e.g. running it with `--tags` on a post that was already adapted
-before tagging existed only adds the `tags:` field and leaves
-`sources`/`description`/the lead wrap untouched. If every field is already in
-place, it reports "already fully adapted" and makes no changes.
+Each field is checked and applied independently, so the script is safe to
+re-run and safe for backfilling a single missing piece — running it with tags
+on a post adapted before tagging existed adds only `tags:` and leaves the rest
+untouched. If nothing changes, it reports "already fully adapted".
+
+Two fields are deliberately protected:
+
+- **`draft:` is presence-checked, not value-checked.** Once a post carries a
+  `draft:` line the script never rewrites it, so a post you have deliberately
+  held back at `draft: true` — or promoted by hand — survives any number of
+  re-runs. Use `--force-draft` to overwrite, or delete the line and re-run.
+- **`date:` is window-checked.** A date already inside January–May of the
+  current year is kept; anything else (including the `produce-blog` default of
+  today's date) is replaced. A plain presence check would mean the date step
+  never ran at all, since `produce-blog` always writes one — and this way
+  re-running does not churn dates that are already correct. Use `--force-date`
+  to redraw.
 
 **`draft:` is presence-checked, not value-checked.** Once a post carries a
 `draft:` line the script never rewrites it, so promoting a post by hand to
