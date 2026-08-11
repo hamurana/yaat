@@ -13,11 +13,11 @@
             "state": {
               "type": "bases",
               "state": {
-                "file": "Blog/blog-06-2026.base",
-                "viewName": "Habit"
+                "file": "Blog/blog-08-2026.base",
+                "viewName": "Health"
               },
               "icon": "lucide-table",
-              "title": "blog-06-2026"
+              "title": "blog-08-2026"
             }
           }
         ]
@@ -187,10 +187,12 @@
   },
   "active": "dd452ed7a6c48d3f",
   "lastOpenFiles": [
-    "Blog/blog-05-2026.base",
-    "Blog/blog-06-2026.base",
-    "Blog/blog-08-2026.base",
     "Blog/blog-07-2026.base",
+    "Blog/blog-08-2026.base",
+    "Learning/07/17-07-2026-1.md",
+    "Learning/07/27-07-2026-3.md",
+    "Blog/blog-06-2026.base",
+    "Blog/blog-05-2026.base",
     "Learning/06/30-06-2026-6.md",
     "Learning/06/30-06-2026-7.md",
     "Learning/06/21-06-2026-2.md",
@@ -214,8 +216,6 @@
     "Learning/05/17-05-2026-3.md",
     "Learning/05/17-05-2026-2.md",
     "Learning/05/17-05-2026-1.md",
-    "Learning/05/15-05-2026-6.md",
-    "Learning/05/15-05-2026-3.md",
     "Misc/Thnmbnails/4zCSHi24Esw.jpg",
     "Misc/Thnmbnails/P2r7WHPniaI.jpg",
     "Misc/Thnmbnails/3db5MyGIUBE.jpg",
@@ -232,7 +232,6 @@
     "Misc/Thnmbnails/ONLwWXNR3j4.jpg",
     "Misc/Thnmbnails/saLGnGU1suE.jpg",
     "Misc/Thnmbnails/YPnKKuWzR0Y.jpg",
-    "Misc/Thnmbnails/T1-MJLh8UvA.jpg",
-    "Misc/Thnmbnails"
+    "Misc/Thnmbnails/T1-MJLh8UvA.jpg"
   ]
 }
