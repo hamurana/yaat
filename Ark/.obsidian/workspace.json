@@ -13,11 +13,11 @@
             "state": {
               "type": "bases",
               "state": {
-                "file": "Blog/blog-08-2026.base",
-                "viewName": "Health"
+                "file": "Blog/blog-07-2026.base",
+                "viewName": "Style"
               },
               "icon": "lucide-table",
-              "title": "blog-08-2026"
+              "title": "blog-07-2026"
             }
           }
         ]
@@ -187,8 +187,8 @@
   },
   "active": "dd452ed7a6c48d3f",
   "lastOpenFiles": [
-    "Blog/blog-07-2026.base",
     "Blog/blog-08-2026.base",
+    "Blog/blog-07-2026.base",
     "Learning/07/17-07-2026-1.md",
     "Learning/07/27-07-2026-3.md",
     "Blog/blog-06-2026.base",

@@ -5,23 +5,29 @@ description: Adapt already-produced blog-factory posts (output of the produce-bl
 
 # Blog NCW Adapter
 
-Takes one finished post produced by the `produce-blog` skill (`blog-factory/output/<slug>/index.md`)
-and adapts its frontmatter and lead paragraph for NCW publishing. This is a pure
-post-processing step on an existing post — it does not touch Ark notes or CSV
-manifests, and it does not write new content beyond the tags it judges.
+Takes one finished post produced by the `produce-blog` skill
+(`blog-factory/output/<Topic>/<slug>/index.md`) and adapts its frontmatter and
+lead paragraph for NCW publishing. This is a pure post-processing step on an
+existing post — it does not touch Ark notes or CSV manifests, and it does not
+write new content beyond the tags it judges.
 
 ## Invocation
 
 `/blog-ncw-adapter <slug|folder|path>` — one required parameter identifying
 what to adapt:
 
-- a bare slug, e.g. `less-clothes-more-elegant` (resolves to
-  `blog-factory/output/less-clothes-more-elegant/index.md`)
+- a bare slug, e.g. `less-clothes-more-elegant` (resolves by searching one
+  level into each topic folder under `blog-factory/output/` — so it works as
+  long as that slug is unique across topics; if the same slug exists under
+  two topics, pass a topic-qualified path instead)
 - a post folder — one that directly contains an `index.md`
 - a direct path to an `index.md`
 - **a folder of posts** — a directory whose *subdirectories* contain
-  `index.md` files. The command then applies to **every post inside it**.
-  `/blog-ncw-adapter output` adapts all posts in `blog-factory/output/`.
+  `index.md` files (a single topic folder, e.g. `blog-factory/output/Health/`),
+  or whose subdirectories are themselves topic folders (`blog-factory/output/`
+  itself). Either way the command applies to **every post found**, recursing
+  one extra level when needed. `/blog-ncw-adapter output` adapts every post
+  under every topic in `blog-factory/output/` in one pass.
 
 If the parameter is missing, ask for it — unless every unadapted post is the
 only thing present, in which case "adapt everything" and "adapt what needs it"

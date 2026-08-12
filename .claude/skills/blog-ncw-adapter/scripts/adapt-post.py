@@ -2,8 +2,8 @@
 """
 adapt-post.py — mechanical NCW adaptation of produce-blog output posts.
 
-Given a path/slug identifying a blog-factory/output/<slug>/index.md file — or a
-FOLDER containing many such posts — this script, in place:
+Given a path/slug identifying a blog-factory/output/<Topic>/<slug>/index.md
+file — or a FOLDER containing many such posts — this script, in place:
   1. Removes the `sources:` block from the frontmatter.
   2. Extracts the post's first body paragraph (the executive summary — skipping
      a leading H1 title line if present) and adds it as a new `description:`
@@ -41,11 +41,19 @@ DATE DISTRIBUTION
 
 FOLDER MODE
   If the target is a directory that does not itself contain an index.md, every
-  immediate subdirectory containing an index.md is treated as a post.
+  immediate subdirectory containing an index.md is treated as a post. If NONE
+  of its immediate children are posts either (e.g. pointed at output/ itself,
+  whose children are topic folders like output/Health/), it recurses one more
+  level and collects every post nested two deep (output/<Topic>/<slug>/) —
+  this is how a single invocation can adapt every topic's posts in one pass.
   Because tags are a per-post judgment, --tags is rejected in folder mode.
   Supply --tags-file instead: a TSV of `slug<TAB>Tag One, Tag Two, ...`.
   Without it, folder mode applies everything except tags and reports which
   posts still need them.
+
+  A bare slug with no topic (single-post mode) is also resolved by searching
+  one level into each topic folder under output/, so `<slug>` alone still
+  works as long as it's unique across topics.
 
 Usage:
   python3 adapt-post.py <slug|folder|path/to/index.md> [--tags "A, B, C"]
@@ -73,6 +81,44 @@ def _is_post_dir(p: Path) -> bool:
     return p.is_dir() and (p / "index.md").is_file()
 
 
+def _collect_posts(c: Path):
+    """Post index.md files directly under c (a topic folder, e.g.
+    output/<Topic>/), or one level deeper if c's own children are themselves
+    topic folders rather than posts (e.g. output/ itself, holding
+    output/<Topic>/<slug>/). Falls back transparently either way."""
+    direct = sorted(d / "index.md" for d in c.iterdir() if _is_post_dir(d))
+    if direct:
+        return direct
+    nested = []
+    for sub in sorted(d for d in c.iterdir() if d.is_dir()):
+        nested += sorted(d / "index.md" for d in sub.iterdir() if _is_post_dir(d))
+    return nested
+
+
+def _find_slug_under_topics(slug: str):
+    """A bare slug with no topic given: look for it nested one level under
+    any topic folder in OUTPUT_ROOT (output/<Topic>/<slug>)."""
+    if not OUTPUT_ROOT.is_dir():
+        return None
+    matches = [t / slug for t in OUTPUT_ROOT.iterdir() if t.is_dir() and _is_post_dir(t / slug)]
+    if len(matches) == 1:
+        return matches[0] / "index.md"
+    if len(matches) > 1:
+        found = ", ".join(str(m.relative_to(REPO_ROOT)) for m in matches)
+        raise SystemExit(f"Slug '{slug}' exists under multiple topics: {found}. Pass a topic-qualified path instead.")
+    return None
+
+
+def _available_slugs():
+    if not OUTPUT_ROOT.is_dir():
+        return []
+    slugs = [d.name for d in OUTPUT_ROOT.iterdir() if _is_post_dir(d)]  # legacy flat layout
+    for t in OUTPUT_ROOT.iterdir():
+        if t.is_dir() and not _is_post_dir(t):
+            slugs += [f"{t.name}/{d.name}" for d in t.iterdir() if _is_post_dir(d)]
+    return sorted(slugs)
+
+
 def resolve_target(arg: str):
     """Return (kind, value) where kind is 'post' (Path to index.md) or
     'batch' (sorted list of index.md Paths)."""
@@ -83,7 +129,7 @@ def resolve_target(arg: str):
     else:
         candidates.append(REPO_ROOT / p)
         candidates.append(Path(arg))
-    candidates.append(OUTPUT_ROOT / arg)  # allow bare slug
+    candidates.append(OUTPUT_ROOT / arg)  # allow bare slug, legacy flat layout
 
     for c in candidates:
         if c.is_file() and c.name == "index.md":
@@ -91,13 +137,17 @@ def resolve_target(arg: str):
         if _is_post_dir(c):
             return "post", c / "index.md"
         if c.is_dir():
-            posts = sorted(d / "index.md" for d in c.iterdir() if _is_post_dir(d))
+            posts = _collect_posts(c)
             if posts:
                 return "batch", posts
         if c.is_file() and c.suffix == ".md":
             return "post", c
 
-    available = sorted(d.name for d in OUTPUT_ROOT.iterdir() if d.is_dir()) if OUTPUT_ROOT.is_dir() else []
+    nested = _find_slug_under_topics(arg)  # bare slug under output/<Topic>/
+    if nested is not None:
+        return "post", nested
+
+    available = _available_slugs()
     raise SystemExit(
         f"Could not resolve '{arg}' to a post or folder of posts under {OUTPUT_ROOT}.\n"
         f"Available slugs: {', '.join(available) if available else '(none found)'}"
@@ -377,7 +427,11 @@ def main():
     tag_map = load_tags_file(Path(args.tags_file)) if args.tags_file else {}
     dates = pick_dates_batch(len(posts), year, rng)
 
-    print(f"Folder mode: {len(posts)} posts under {posts[0].parent.parent}")
+    topic_dirs = sorted(set(p.parent.parent.name for p in posts))
+    if len(topic_dirs) > 1:
+        print(f"Folder mode: {len(posts)} posts across topics: {', '.join(topic_dirs)}")
+    else:
+        print(f"Folder mode: {len(posts)} posts under {posts[0].parent.parent}")
     untagged, changed_n = [], 0
     for path, d in zip(posts, dates):
         slug = path.parent.name
