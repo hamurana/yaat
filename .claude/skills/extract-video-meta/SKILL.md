@@ -11,8 +11,10 @@ subfolder of `video-injest/download-video/` in turn.
 
 ## Layout this skill expects
 
-The `youtube-video-downloader` skill leaves one folder per video, each holding
-the source `.info.json` (plus the `.mp3`, `.jpg`, and possibly an `.srt`):
+The download stage of the `process-video` skill
+(`.claude/skills/process-video/scripts/download.sh`) leaves one folder per video,
+each holding the source `.info.json` (plus the `.mp3`, `.jpg`, and possibly an
+`.srt`):
 
 ```
 video-injest/download-video/

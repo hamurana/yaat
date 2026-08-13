@@ -1,13 +1,15 @@
 ---
 name: process-video
-description: Run the full YouTube-to-Ark pipeline end to end — download every video in the nominated playlist, then process them one at a time (transcribe, extract metadata, build one curated Obsidian note in the Ark vault, and delete the source folder) until video-injest/download-video/ ends up empty. Use whenever the user wants to "process the videos", "process the playlist", "run the whole/full pipeline", "download and build the Ark notes", or otherwise take a playlist all the way from URL to finished knowledge-base notes in one go. This orchestrates the youtube-video-downloader, transcribe-audio, extract-video-meta, and build-ark-note skills in the correct dependency order.
+description: Run the full YouTube-to-Ark pipeline end to end — download every video in the nominated playlist, then process them one at a time (transcribe, extract metadata, build one curated Obsidian note in the Ark vault, and delete the source folder) until video-injest/download-video/ ends up empty. Use whenever the user wants to "process the videos", "process the playlist", "run the whole/full pipeline", "download and build the Ark notes", or otherwise take a playlist all the way from URL to finished knowledge-base notes in one go. This runs its own download stage (scripts/download.sh) and then orchestrates the transcribe-audio, extract-video-meta, and build-ark-note skills in the correct dependency order.
 ---
 
 # Process Video (full pipeline)
 
 End-to-end orchestrator. Takes the playlist URLs in `video-injest/video.json` all the way to
-finished **Ark** notes, then leaves `video-injest/download-video/` empty. It chains four
-existing skills — it does **not** reimplement them.
+finished **Ark** notes, then leaves `video-injest/download-video/` empty. Stage 1 is its own
+script (`scripts/download.sh` — there is no separate downloader skill); stages 2–4 chain three
+existing skills (`transcribe-audio`, `extract-video-meta`, `build-ark-note`) — it does **not**
+reimplement them.
 
 The shape is: **download is batch** (one resilient yt-dlp pass over the whole
 playlist), then the workflow **switches to per-video** — each downloaded video is
@@ -42,15 +44,25 @@ its output). Within a video, stage 4 deletes the folder, so it must run only aft
 
 ### Stage 1 — download the whole playlist (batch)
 
-From the project root, run the download script in the **background** and `tail` its
-log so progress is visible — a playlist download is long-running, so do **not**
-block silently:
+From the project root, run the download script in the **foreground**:
 
 ```bash
 bash .claude/skills/process-video/scripts/download.sh
-# watch in another terminal (or periodically tail it yourself):
-tail -f video-injest/download-video/process-video.log
 ```
+
+> **⚠️ Run this in the FOREGROUND — do not background it.** Backgrounding the
+> download makes **every** video fail with
+> `ERROR: unable to download video data: HTTP Error 403: Forbidden`, while the
+> script still **exits 0**. Playlist enumeration and per-video extraction succeed
+> either way, so yt-dlp writes `<Title>.info.json` and `<Title>.jpg` and the
+> folders *look* populated — they are simply missing the `.mp3`. Observed
+> 13-08-2026: 0/5 twice backgrounded, then 5/5 in the foreground, identical
+> command and flags, minutes apart. Ruled out by direct test: rate limiting, the
+> yt-dlp version, the `android_vr` player client, and playlist-vs-watch-URL. The
+> mechanism is unconfirmed (it behaves like a network policy applied to
+> backgrounded tasks that permits the YouTube API hosts but blocks the
+> `googlevideo.com` media hosts). **Stage 2's whisper call is the opposite — that
+> one should still be backgrounded**, because it is local and needs no network.
 
 `download.sh` does one resilient yt-dlp pass per playlist URL in
 `video-injest/video.json` (per CLAUDE.md §4 — **not** the "enumerate then
@@ -58,8 +70,19 @@ download each" flow), with `--ignore-errors --no-overwrites` so one bad video
 doesn't abort the batch and a re-run skips already-downloaded files. Optional
 args: `download.sh [video-injest/video.json] [video-injest/download-video]`. It mirrors all output to `video-injest/download-video/process-video.log`
 (truncated each run) with `PYTHONUNBUFFERED=1` so yt-dlp progress streams live.
+A long playlist can take a while in the foreground; if the call times out, the
+`--no-overwrites` flag makes a re-run resume rather than restart.
 
-When it finishes, report how many video folders landed in `video-injest/download-video/`.
+**Verify the audio actually landed — exit 0 is not sufficient.** Count `.mp3`
+files, not folders:
+
+```bash
+find video-injest/download-video -name '*.mp3' | wc -l
+```
+
+Report that count against the number expected. If it is 0 while folders exist,
+you hit the backgrounding failure above — just re-run in the foreground, and
+`--no-overwrites` will fetch only the missing audio.
 
 ### Stages 2–5 — process each video, one at a time
 
@@ -153,3 +176,8 @@ rather than deleted. "Nothing left in `video-injest/download-video/`" holds for 
 case; a surviving folder is the explicit signal of which video needs another pass.
 Just re-run this skill — `download.sh` skips already-downloaded files, and the
 per-video loop simply never sees the videos whose folders were already removed.
+
+**If *every* folder is missing its `.mp3`, that is not a partial failure** — it is
+the stage-1 backgrounding bug (see the warning in Stage 1). Re-run the download in
+the foreground before entering the per-video loop, rather than letting all N videos
+fail the stage-3 guard one by one.

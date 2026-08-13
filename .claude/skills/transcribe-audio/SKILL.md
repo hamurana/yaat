@@ -10,8 +10,9 @@ openai-whisper, walking each subfolder of `video-injest/download-video/` in turn
 
 ## Layout this skill expects
 
-The `youtube-video-downloader` skill leaves one folder per video, each holding
-three files:
+The download stage of the `process-video` skill
+(`.claude/skills/process-video/scripts/download.sh`) leaves one folder per video,
+each holding three files:
 
 ```
 video-injest/download-video/
