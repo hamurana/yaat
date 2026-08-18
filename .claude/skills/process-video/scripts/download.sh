@@ -77,6 +77,63 @@ while IFS= read -r url; do
     "$url"
 done < <(jq -r '.[]' "$JSON")
 
+# --- retry pass: PO-token 403 fallback -------------------------------------
+# YouTube requires a GVS PO Token to serve its adaptive audio-only streams
+# (formats 140/251, the ones "bestaudio" picks). Without one, every metadata
+# call still succeeds — so yt-dlp writes <Title>.info.json and <Title>.jpg and
+# the folders LOOK populated — but each media fetch from googlevideo.com
+# returns "HTTP Error 403: Forbidden" and no .mp3 is ever produced. Combined
+# with --ignore-errors the script then exits 0 on a total failure, which is why
+# the count check below is mandatory rather than advisory.
+#
+# The legacy progressive format 18 (360p MP4 with muxed 44k AAC audio) is still
+# served WITHOUT a PO token, so it is the fallback. Its lower audio bitrate is
+# immaterial downstream: whisper resamples everything to 16 kHz mono anyway.
+#
+# This must be a SECOND PASS, not "-f 251/18". yt-dlp resolves a "/" format
+# fallback at SELECTION time, not download time — 251 is still advertised as
+# available, so it would always win the selection and then 403 at fetch.
+echo "----------------------------------------------------------------------"
+echo "[$(date +%T)] Retry pass: videos that produced no .mp3 (403 fallback)"
+retried=0
+while IFS= read -r info; do
+  dir="$(dirname "$info")"
+  find "$dir" -maxdepth 1 -type f -name '*.mp3' | grep -q . && continue
+  vid="$(jq -r '.id // empty' "$info")"
+  [[ -n "$vid" ]] || continue
+  echo "  no .mp3 -> retrying $vid with format 18: $(basename "$dir")"
+  retried=$((retried + 1))
+  yt-dlp \
+    -f 18 \
+    --extract-audio \
+    --audio-format mp3 \
+    --audio-quality 0 \
+    --no-write-playlist-metafiles \
+    --ignore-errors \
+    --no-overwrites \
+    --no-playlist \
+    --output "$dir/%(title)s.%(ext)s" \
+    "https://www.youtube.com/watch?v=$vid"
+done < <(find "$BASE" -mindepth 2 -maxdepth 2 -type f -name '*.info.json')
+[[ "$retried" -eq 0 ]] && echo "  (nothing to retry — every video already has audio)"
+
+# --- verify ----------------------------------------------------------------
+# Count .mp3 files, never folders: a 403'd video still leaves a populated
+# folder, so "the folders are there" proves nothing about the audio.
+n_dirs="$(find "$BASE" -mindepth 1 -maxdepth 1 -type d | wc -l | tr -d ' ')"
+n_mp3="$(find "$BASE" -type f -name '*.mp3' | wc -l | tr -d ' ')"
+echo "----------------------------------------------------------------------"
+echo "Audio check: $n_mp3 .mp3 / $n_dirs video folders"
+if [[ "$n_mp3" -lt "$n_dirs" ]]; then
+  echo "WARNING: $((n_dirs - n_mp3)) folder(s) still have no .mp3." >&2
+  find "$BASE" -mindepth 1 -maxdepth 1 -type d -print0 \
+    | while IFS= read -r -d '' d; do
+        find "$d" -maxdepth 1 -type f -name '*.mp3' | grep -q . \
+          || echo "  MISSING AUDIO: $(basename "$d")" >&2
+      done
+  echo "These will fail the build-ark-note precondition guard and be left in place." >&2
+fi
+
 echo "######################################################################"
 echo "# [$(date +%T)] Download done. Hand off to the per-video loop"
 echo "#   (transcribe -> extract-meta -> build-ark-note -> delete folder)."

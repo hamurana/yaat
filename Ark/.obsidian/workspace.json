@@ -13,11 +13,11 @@
             "state": {
               "type": "bases",
               "state": {
-                "file": "Blog/blog-07-2026.base",
-                "viewName": "Style"
+                "file": "Blog/blog-08-2026.base",
+                "viewName": "Health"
               },
               "icon": "lucide-table",
-              "title": "blog-07-2026"
+              "title": "blog-08-2026"
             }
           }
         ]
@@ -187,6 +187,7 @@
   },
   "active": "dd452ed7a6c48d3f",
   "lastOpenFiles": [
+    "Blog/blog-07-2026.base",
     "Learning/08/13-08-2026-5.md",
     "Misc/Thnmbnails/Fc8AtJKs9Bw.jpg",
     "Learning/08/13-08-2026-4.md",
@@ -198,7 +199,6 @@
     "Learning/08/13-08-2026-1.md",
     "Misc/Thnmbnails/2gpl7w_kWlQ.jpg",
     "Blog/blog-08-2026.base",
-    "Blog/blog-07-2026.base",
     "Learning/07/17-07-2026-1.md",
     "Learning/07/27-07-2026-3.md",
     "Blog/blog-06-2026.base",
@@ -221,7 +221,6 @@
     "Learning/06/10-06-2026-2.md",
     "Learning/06/10-06-2026-1.md",
     "Learning/05/12-05-2026-2.md",
-    "Learning/05/12-05-2026-1.md",
     "Misc/Thnmbnails/4zCSHi24Esw.jpg",
     "Misc/Thnmbnails/P2r7WHPniaI.jpg",
     "Misc/Thnmbnails/3db5MyGIUBE.jpg",
