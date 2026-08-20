@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(brew upgrade *)",
+      "Bash(yt-dlp --version)",
+      "Bash(brew info *)",
+      "Bash(brew outdated *)",
+      "Bash(command -v pipx)",
+      "Bash(echo \"pipx: $\\(command -v pipx\\)\")",
+      "Bash(python3 -c \"import sys; print\\(sys.executable\\)\")",
+      "Bash(PATH=/Volumes/T5/.local/bin:__TRACKED_VAR__ bash .claude/skills/process-video/scripts/download.sh)",
+      "Bash(bash .claude/skills/extract-video-meta/scripts/extract-meta.sh video-injest/download-video)",
+      "Bash(awk '{print; fflush\\(\\)} /Folders found/{exit}')",
+      "Bash(rm -f download-sh-must-run-foreground.md)",
+      "Bash(cat)"
+    ]
+  }
+}
